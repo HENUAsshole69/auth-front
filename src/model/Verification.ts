@@ -8,3 +8,9 @@ export interface VerificationProcess {
     stage: VerificationProcessStage;
     user: User;
 }
+
+export interface VerificationProcessDto {
+    content: string;
+    id: number;
+    stage: VerificationProcessStage;
+}
