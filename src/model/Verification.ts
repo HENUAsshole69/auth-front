@@ -10,7 +10,7 @@ export interface VerificationProcess {
 }
 
 export interface VerificationProcessDto {
-    content: string;
-    id: number;
-    stage: VerificationProcessStage;
+    content: string|undefined;
+    id: number|undefined;
+    stage: VerificationProcessStage|undefined;
 }

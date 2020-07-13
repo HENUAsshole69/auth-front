@@ -8,15 +8,15 @@ export class VerClient {
         return (await AxiosInstance.get("/antique/needVerification/page/"+pageNo+'/'+pageLen)).data
     }
 
-    static async getAntiqueAtStage( stage : number, pageNo : number, pageLen : number): Promise<Page<AntiqueDto>>{
+    static async getAntiqueAtStage( stage: number, pageNo: number, pageLen: number): Promise<Page<AntiqueDto>>{
         return (await AxiosInstance.get("/antique/atVerificationStage/"+stage+"/page/"+pageNo+"/"+pageLen)).data
     }
 
-    static async verifyAntique(antiqueId : number,ver: VerificationProcessDto){
+    static async verifyAntique(antiqueId: number,ver: VerificationProcessDto){
         return (await AxiosInstance.post("/verify/antique/"+antiqueId,ver))
     }
 
-    static async getVerification(antiqueId : number) : Promise<VerificationProcessDto[]>{
+    static async getVerification(antiqueId: number): Promise<VerificationProcessDto[]>{
         return (await AxiosInstance.get('/antique/verification/'+antiqueId)).data
     }
 

@@ -15,7 +15,7 @@
                 striped
         ></v-progress-linear>
         <v-card-actions>
-            <v-list-item-subtitle>{{'审核过程：第'+antique.verificationProcesses+'步'}}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{antique.verificationProcesses !==3 ?'审核过程：第'+antique.verificationProcesses+'步':'审核完成'}}</v-list-item-subtitle>
             <v-spacer></v-spacer>
 
             <v-btn icon>
