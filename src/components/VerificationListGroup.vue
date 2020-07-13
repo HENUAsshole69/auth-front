@@ -12,6 +12,9 @@
                         <v-col>
                             <v-btn text small @click="onVerification" color="primary">批准</v-btn>
                         </v-col>
+                        <v-col>
+                            <v-btn text small color="error" @click="onInvalidate">拒绝批准</v-btn>
+                        </v-col>
                     </v-row>
                 </v-container>
             </v-list-item-content>
@@ -50,8 +53,15 @@
         async onVerification(){
             if(this.antique?.id !== undefined) {
                 const result = await VerClient.verifyAntique(this.antique.id,this.verificationDto)
-                alert(result)
             }
+            this.$router.go(0)
+        }
+
+        async onInvalidate(){
+            if(this.antique?.id !== undefined) {
+                const result = await VerClient.invalidate(this.antique.id,this.verificationDto)
+            }
+            this.$router.go(0)
         }
     }
 </script>

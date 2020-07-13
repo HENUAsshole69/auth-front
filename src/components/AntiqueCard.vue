@@ -15,10 +15,10 @@
                 striped
         ></v-progress-linear>
         <v-card-actions>
-            <v-list-item-subtitle>{{antique.verificationProcesses !==3 ?'审核过程：第'+antique.verificationProcesses+'步':'审核完成'}}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{subtitle}}</v-list-item-subtitle>
             <v-spacer></v-spacer>
 
-            <v-btn icon>
+            <v-btn icon :disabled="antique.verificationProcesses !== 3 || antique.invalid">
                 <v-icon>mdi-certificate</v-icon>
             </v-btn>
 
@@ -45,6 +45,17 @@
         picSrc=""
         async mounted(){
             this.picSrc ='data:image/jpeg;base64, '+ (await AntiqueClient.getAntiquePic(this.antique!!.id))
+        }
+
+        get subtitle(){
+            if(this.antique !== undefined) {
+                if(!this.antique.invalid)
+                return this.antique.verificationProcesses !== 3 ? '审核过程：第' + this.antique.verificationProcesses + '步' : '审核完成'
+                else
+                    return '审核失败'
+            }else {
+                return undefined
+            }
         }
     }
 </script>

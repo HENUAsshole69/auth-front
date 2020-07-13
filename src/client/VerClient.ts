@@ -20,4 +20,7 @@ export class VerClient {
         return (await AxiosInstance.get('/antique/verification/'+antiqueId)).data
     }
 
+    static async invalidate(antiqueId: number){
+        return (await AxiosInstance.delete('/antique/verification/'+antiqueId)).data
+    }
 }
