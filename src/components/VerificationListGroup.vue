@@ -1,4 +1,15 @@
 <template>
+    <v-container>
+        <v-col>
+
+    <v-list  two-line subheader>
+        <v-divider inset></v-divider>
+        <v-subheader inset>过审步骤</v-subheader>
+        <v-list-item>
+            <VerificationDisplay :verifications="verifications"/>
+        </v-list-item>
+        <v-divider inset></v-divider>
+        <v-subheader inset>审核</v-subheader>
         <v-list-item>
             <v-list-item-content>
                 <v-container>
@@ -19,6 +30,10 @@
                 </v-container>
             </v-list-item-content>
         </v-list-item>
+    </v-list>
+
+        </v-col>
+    </v-container>
 </template>
 
 <script lang="ts">
@@ -30,8 +45,10 @@
     import {VerificationProcessDto} from "@/model/Verification";
     import {VerClient} from "@/client/VerClient";
     import StageSelector from "@/components/StageSelector.vue";
+    import VerificationDisplay from "@/components/VerificationDisplay.vue";
     @Component({
         components:{
+            VerificationDisplay,
             StageSelector
 
         }
@@ -59,7 +76,7 @@
 
         async onInvalidate(){
             if(this.antique?.id !== undefined) {
-                const result = await VerClient.invalidate(this.antique.id,this.verificationDto)
+                const result = await VerClient.invalidate(this.antique.id)
             }
             this.$router.go(0)
         }

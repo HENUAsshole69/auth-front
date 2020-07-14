@@ -18,6 +18,7 @@ export interface AntiqueDto {
     type: AntiqueType;
     invalid: boolean|null
     verificationProcesses: number;
+    pic:Blob|null;
 }
 
 export type AntiqueType = "PORCELAIN" | "JADE" | "PAINTING_CALLIGRAPHY" | "METAL" | "MISC";

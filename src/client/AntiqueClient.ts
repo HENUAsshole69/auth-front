@@ -3,7 +3,7 @@ import AxiosInstance from "./AxiosInstance";
 import { Page } from '@/model/Page';
 
 export class AntiqueClient{
-    static postAntique(antique: Antique){
+    static postAntique(antique: AntiqueDto){
         return AxiosInstance.post('/antique',antique,{})
     }
     static async getAntique(pageNo: number,pageLen: number): Promise<Page<AntiqueDto>>{
