@@ -37,17 +37,6 @@
                 </v-col>
             </v-row>
         </v-container>
-        <div style="position: absolute;bottom: 1em;right: 1em">
-            <v-btn
-                    dark
-                    fab
-                    color="pink"
-                    v-on:click="$router.push('/newAntique'
-                )"
-            >
-                <v-icon>mdi-plus</v-icon>
-            </v-btn>
-        </div>
     </div>
 </template>
 

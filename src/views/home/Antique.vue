@@ -1,6 +1,7 @@
 <template>
     <div  v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0">
-    <v-container fluid>
+        <BatchImportDialog @close="batchImportDialog = false" :dialog="batchImportDialog"/>
+        <v-container fluid>
         <v-row dense>
             <v-col
                     v-for="card in cards"
@@ -20,6 +21,14 @@
         >
             <v-icon>mdi-plus</v-icon>
         </v-btn>
+            <v-btn
+                    dark
+                    fab
+                    color="pink"
+                    v-on:click="batchImportDialog = true"
+            >
+                <v-icon>mdi-minus</v-icon>
+            </v-btn>
         </div>
     </div>
 </template>
@@ -28,10 +37,12 @@
     import infiniteScroll from 'vue-infinite-scroll'
     import {AntiqueClient} from "../../client/AntiqueClient";
     import AntiqueCard from "../../components/AntiqueCard";
+    import BatchImportDialog from "../../components/BatchImportDialog";
     export default {
         name: "Antique",
-        components: {AntiqueCard},
+        components: {BatchImportDialog, AntiqueCard},
         data:()=>({
+            batchImportDialog:false,
             cards: [
             ],
             busy:false,
