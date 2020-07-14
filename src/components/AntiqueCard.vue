@@ -9,7 +9,7 @@
             <v-card-title v-text="antique.name"></v-card-title>
         </v-img>
         <v-progress-linear
-                color="light-blue"
+                :color="!antique.invalid?'light-blue':'red'"
                 height="10"
                 :value="antique.verificationProcesses / 3 * 100"
                 striped

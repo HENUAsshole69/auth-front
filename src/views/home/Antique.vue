@@ -1,5 +1,15 @@
 <template>
-    <div  v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0">
+    <transition
+            name="fade"
+    >
+    <div>
+        <v-progress-linear
+                indeterminate
+                color="cyan"
+                v-if="busy"
+        ></v-progress-linear>
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0">
+
         <BatchImportDialog @close="batchImportDialog = false" :dialog="batchImportDialog"/>
         <v-container fluid>
         <v-row dense>
@@ -31,6 +41,8 @@
             </v-btn>
         </div>
     </div>
+    </div>
+    </transition>
 </template>
 
 <script>
@@ -40,14 +52,14 @@
     import BatchImportDialog from "../../components/BatchImportDialog";
     export default {
         name: "Antique",
-        components: {BatchImportDialog, AntiqueCard},
+        components: { BatchImportDialog, AntiqueCard},
         data:()=>({
             batchImportDialog:false,
             cards: [
             ],
             busy:false,
             pageNo:0,
-            pageLen:10
+            pageLen:10,
         }),
         directives:{
             infiniteScroll
@@ -56,7 +68,6 @@
             loadMore: async function() {
                 this.busy = true;
                 const result = await AntiqueClient.getAntique(this.pageNo,this.pageLen)
-                console.log(result)
                 this.cards.push(...result.content)
                 if(!result.last) {
                     this.pageNo++
@@ -67,6 +78,7 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    $animationDuration: 0.5s; // specify animation duration. Default value: 1s
+    @import "~vue2-animate/src/sass/vue2-animate";
 </style>

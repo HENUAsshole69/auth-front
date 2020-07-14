@@ -94,7 +94,7 @@
                 },
                 { text: '描述', value: 'desp' },
                 { text: '类别', value: 'type' },
-                { text: 'Actions', value: 'actions', sortable: false },
+                { text: '删除', value: 'actions', sortable: false },
             ],
             antiques: [],
             nameRules:[v=> v.length !== 0 || '名称不能为空'],
@@ -105,7 +105,7 @@
         methods:{
             deleteItem (item) {
                 const index = this.antiques.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.antiques.splice(index, 1)
+                confirm('确定要删除该项吗?') && this.antiques.splice(index, 1)
             },
             addItem(){
                 this.antiques.push({

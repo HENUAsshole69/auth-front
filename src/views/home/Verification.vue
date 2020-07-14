@@ -1,4 +1,14 @@
 <template>
+    <transition
+            name="fade"
+
+    >
+    <div>
+        <v-progress-linear
+                indeterminate
+                color="cyan"
+                v-if="busy"
+        ></v-progress-linear>
     <div  v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0">
         <v-container fluid>
             <v-row no-gutters>
@@ -38,6 +48,9 @@
             </v-row>
         </v-container>
     </div>
+
+    </div>
+    </transition>
 </template>
 
 <script>
@@ -72,6 +85,7 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    $animationDuration: 0.5s; // specify animation duration. Default value: 1s
+    @import "~vue2-animate/src/sass/vue2-animate";
 </style>

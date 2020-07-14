@@ -1,4 +1,5 @@
 <template>
+    <transition name="fade">
     <div id="app">
         <v-app dark>
             <v-content>
@@ -6,7 +7,7 @@
                     <v-layout align-center justify-center>
                         <v-flex class="login-form text-xs-center">
                             <div class="display-1 mb-3">
-                                <v-icon class="mr-2" large="large">work</v-icon> MyWorkspace
+                                <v-icon class="mr-2" large="large"> mdi-bank-outline</v-icon> 文物信息管理系统
                             </div>
                             <v-card light="light">
 
@@ -26,17 +27,17 @@
                                         <template v-else>注册</template>
                                     </div>
                                     <v-form>
-                                        <v-text-field v-model="user.name" light="light" prepend-icon="person" label="用户名"></v-text-field>
+                                        <v-text-field v-model="user.name" light="light" prepend-icon="mdi-account" label="用户名"></v-text-field>
                                         <RoleSelector  v-if="!options.isLoggingIn" @change="user.type = $event"/>
                                         <v-text-field v-model="user.realName" v-if="!options.isLoggingIn" light="light" prepend-icon="person" label="真名"></v-text-field>
                                         <v-text-field v-model="user.cell" v-if="!options.isLoggingIn" type="number" light="light" prepend-icon="person" label="电话"></v-text-field>
-                                        <v-text-field v-model="user.password" light="light" prepend-icon="lock" label="密码" type="password"></v-text-field>
+                                        <v-text-field v-model="user.password" light="light" prepend-icon="mdi-lock" label="密码" type="password"></v-text-field>
                                         <v-btn v-if="options.isLoggingIn" @click.prevent="" block="block" type="submit"  @click="login">登录</v-btn>
                                         <v-btn v-else block="block" type="submit" @click.prevent="(options.isLoggingIn = true)" @click="register">注册</v-btn>
                                     </v-form>
                                 </v-card-text>
                             </v-card>
-                            <div v-if="options.isLoggingIn">Don't have an account?
+                            <div v-if="options.isLoggingIn">没有账号?点此注册
                                 <v-btn light="light" @click="(options.isLoggingIn = false)">注册</v-btn>
                             </div>
                         </v-flex>
@@ -48,6 +49,7 @@
             </v-footer>
         </v-app>
     </div>
+    </transition>
 </template>
 
 <script>
@@ -81,6 +83,7 @@
                     const res = await UserClient.login(this.user.name, this.user.password);
                     this.$store.commit("login",res.data)
                     AxiosInstance.defaults.headers.common['x-api-key'] = res.data;
+                    localStorage.setItem('token',res.data)
                     router.go(-1)
                 }catch (e) {
                     this.options.errorAlert = true;
@@ -101,7 +104,7 @@
     })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .login-form {
         max-width: 500px;
     }
@@ -113,4 +116,6 @@
         opacity: 0;
     }
 
+    $animationDuration: 0.5s; // specify animation duration. Default value: 1s
+    @import "~vue2-animate/src/sass/vue2-animate";
 </style>

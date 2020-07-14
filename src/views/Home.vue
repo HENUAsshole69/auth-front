@@ -1,4 +1,5 @@
 <template>
+    <transition name="fade">
     <div style="height: 100%">
     <v-app-bar
             color="indigo darken-2"
@@ -32,12 +33,13 @@
             <v-icon>mdi-heart</v-icon>
         </v-btn>
 
-        <v-btn icon>
-            <v-icon>mdi-dots-vertical</v-icon>
+        <v-btn icon @click="logout">
+            <v-icon>mdi-exit-to-app</v-icon>
         </v-btn>
     </v-app-bar>
     <router-view></router-view>
     </div>
+    </transition>
 </template>
 
 <script>
@@ -54,10 +56,19 @@
                     path:"/home/verification"
                 }
             ]
-        })
+        }),
+        methods:{
+            logout:function (
+            ) {
+                this.$store.commit('logout')
+                localStorage.removeItem('token')
+                this.$router.go(0)
+            }
+        }
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    $animationDuration: 0.5s; // specify animation duration. Default value: 1s
+    @import "~vue2-animate/src/sass/vue2-animate";
 </style>
