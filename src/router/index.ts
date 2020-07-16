@@ -31,6 +31,11 @@ Vue.use(VueRouter)
     ]
   },
     {
+      path: '/admin',
+      name: 'Admin',
+      component: ()=>import('../views/Admin.vue'),
+    },
+    {
       path: '/search/:key',
       name: 'Search',
       component: ()=>import('../views/Search.vue'),

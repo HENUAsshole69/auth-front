@@ -14,3 +14,9 @@ export interface VerificationProcessDto {
     id: number|undefined;
     stage: VerificationProcessStage|undefined;
 }
+
+export const StageSelect  = [
+    {text:'第一步',value:'STAGE_ONE'},
+    {text:'第二步',value:'STAGE_TWO'},
+    {text:'第三步',value:'STAGE_THREE'},
+]

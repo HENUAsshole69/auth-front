@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: null
+    token: null,
+    userObj:null
   },
   mutations: {
     login(state,token){
@@ -13,6 +14,9 @@ export default new Vuex.Store({
     },
     logout(state){
       state.token = null
+    },
+    loadUser(state,obj){
+      state.userObj = obj
     }
   },
   actions: {

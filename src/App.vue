@@ -7,6 +7,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import AxiosInstance from "./client/AxiosInstance";
+import {UserClient} from "@/client/UserClient";
 
 
 export default Vue.extend({
@@ -14,10 +15,11 @@ export default Vue.extend({
 
   components: {
   },
-  mounted() {
+  async mounted() {
     if(localStorage.getItem('token') !== null){
       AxiosInstance.defaults.headers.common['x-api-key'] = localStorage.getItem('token')
-        this.$store.commit('login',localStorage.getItem('token'))
+      this.$store.commit('login',localStorage.getItem('token'))
+      this.$store.commit('loadUser',await UserClient.getUser())
     }
   },
   data: () => ({

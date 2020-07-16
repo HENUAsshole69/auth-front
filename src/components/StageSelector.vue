@@ -8,16 +8,14 @@
 </template>
 
 <script>
+    import {StageSelect} from "@/model/Verification";
+
     export default {
 
         name: "TypeSelector",
         data:()=>({
             value:undefined,
-            items:[
-                {text:'第一步',value:'STAGE_ONE'},
-                {text:'第二步',value:'STAGE_TWO'},
-                {text:'第三步',value:'STAGE_THREE'},
-            ]
+            items:StageSelect
         })
     }
 </script>
