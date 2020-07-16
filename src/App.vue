@@ -19,7 +19,7 @@ export default Vue.extend({
     if(localStorage.getItem('token') !== null){
       AxiosInstance.defaults.headers.common['x-api-key'] = localStorage.getItem('token')
       this.$store.commit('login',localStorage.getItem('token'))
-      this.$store.commit('loadUser',await UserClient.getUser())
+      await this.$store.dispatch("getUserObj")
     }
   },
   data: () => ({

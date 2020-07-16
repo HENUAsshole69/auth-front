@@ -1,16 +1,16 @@
 <template>
     <v-container>
         <v-col>
-
-    <v-list  two-line subheader>
-        <v-divider inset></v-divider>
-        <v-subheader inset>过审步骤</v-subheader>
-        <v-list-item>
+            <v-expansion-panels popout>
+                <v-expansion-panel>
+         <v-expansion-panel-header>过审步骤</v-expansion-panel-header>
+        <v-expansion-panel-content>
             <VerificationDisplay :verifications="verifications"/>
-        </v-list-item>
-        <v-divider inset></v-divider>
-        <v-subheader inset>审核</v-subheader>
-        <v-list-item>
+        </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>审核</v-expansion-panel-header>
+        <v-expansion-panel-content>
             <v-list-item-content>
                 <v-container>
                     <v-row>
@@ -20,6 +20,8 @@
                         <v-col>
                             <StageSelector @change="verificationDto.stage = $event"/>
                         </v-col>
+                    </v-row>
+                    <v-row>
                         <v-col>
                             <v-btn text small @click="onVerification" color="primary">批准</v-btn>
                         </v-col>
@@ -29,8 +31,9 @@
                     </v-row>
                 </v-container>
             </v-list-item-content>
-        </v-list-item>
-    </v-list>
+        </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
 
         </v-col>
     </v-container>

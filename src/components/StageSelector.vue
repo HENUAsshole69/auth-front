@@ -15,8 +15,15 @@
         name: "TypeSelector",
         data:()=>({
             value:undefined,
-            items:StageSelect
-        })
+            items:[]
+        }),
+        mounted() {
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            const model = this
+            this.items.push(...StageSelect.filter(function (value) {
+                return model.$store.state.userObj.verifiable.includes(value.value)
+            }))
+        }
     }
 </script>
 
