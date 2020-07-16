@@ -11,6 +11,8 @@
     <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0">
 
         <BatchImportDialog @close="batchImportDialog = false" :dialog="batchImportDialog"/>
+        <NewAntiqueDialog @close="newAntiqueDialog = false" :dialog="newAntiqueDialog"/>
+        <SearchResultDialog @close="searchTest = false" :dialog="searchTest"/>
         <v-container fluid>
         <v-row dense>
             <v-col
@@ -21,24 +23,25 @@
             </v-col>
         </v-row>
     </v-container>
-        <div style="position: absolute;bottom: 1em;right: 1em">
-        <v-btn
-                dark
-                fab
-                color="pink"
-                v-on:click="$router.push('/newAntique'
-                )"
-        >
-            <v-icon>mdi-plus</v-icon>
-        </v-btn>
+        <div style="position: fixed;right: 2em;bottom: 6em">
             <v-btn
                     dark
                     fab
                     color="pink"
                     v-on:click="batchImportDialog = true"
             >
-                <v-icon>mdi-minus</v-icon>
+                <v-icon>mdi-playlist-plus</v-icon>
             </v-btn>
+        </div>
+        <div style="position: fixed;right: 2em;bottom: 2em">
+        <v-btn
+                dark
+                fab
+                color="pink"
+                v-on:click="newAntiqueDialog = true"
+        >
+            <v-icon>mdi-plus</v-icon>
+        </v-btn>
         </div>
     </div>
     </div>
@@ -50,11 +53,16 @@
     import {AntiqueClient} from "../../client/AntiqueClient";
     import AntiqueCard from "../../components/AntiqueCard";
     import BatchImportDialog from "../../components/BatchImportDialog";
+    import NewAntiqueDialog from "../../components/NewAntiqueDialog";
+    import SearchResultDialog from "../../components/SearchResultDialog";
     export default {
         name: "Antique",
-        components: { BatchImportDialog, AntiqueCard},
+        components: {SearchResultDialog, NewAntiqueDialog, BatchImportDialog, AntiqueCard},
         data:()=>({
             batchImportDialog:false,
+            newAntiqueDialog:false,
+            searchTest:false,
+            search:'',
             cards: [
             ],
             busy:false,

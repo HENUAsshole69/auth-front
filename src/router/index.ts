@@ -31,6 +31,24 @@ Vue.use(VueRouter)
     ]
   },
     {
+      path: '/search/:key',
+      name: 'Search',
+      component: ()=>import('../views/Search.vue'),
+      children:[
+        { path: '', redirect:  { name: 'AntiqueSearch'} },
+        {
+          path: 'antique',
+          name: 'AntiqueSearch',
+          component: ()=>import('../views/search/AntiqueSearch.vue')
+        },
+        {
+          path: 'verification',
+          name: 'VerificationSearch',
+          component: ()=>import('../views/search/VerificationSearch.vue')
+        }
+      ]
+    },
+    {
       path: '/newAntique',
       name: 'NewAntique',
       component: ()=>import('../views/NewAntique.vue')

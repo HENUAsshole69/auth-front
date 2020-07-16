@@ -21,4 +21,7 @@ export class AntiqueClient{
     static async getAntiqueDto(id: number): Promise<AntiqueDto>{
         return (await AxiosInstance.get('/antique/'+id)).data
     }
+    static async searchAntique(keyWord: string,pageNo: number,pageLen: number): Promise<Page<AntiqueDto>>{
+        return (await AxiosInstance.get("/antique/search/page/"+pageNo+'/'+pageLen+'?key='+keyWord)).data
+    }
 }

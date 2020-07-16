@@ -1,12 +1,12 @@
 <template>
     <transition name="fade">
     <div style="height: 100%">
-    <v-app-bar
+    <v-toolbar
             color="indigo darken-2"
             dark
 
     >
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
 
         <template v-slot:extension>
             <v-tabs
@@ -23,20 +23,18 @@
             </v-tabs>
         </template>
 
-        <v-spacer></v-spacer>
-
-        <v-btn icon>
-            <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-            <v-icon>mdi-heart</v-icon>
-        </v-btn>
-
+        <v-container fluid style="margin-top: 1.9em">
+            <v-row>
+                <v-col>
+                    <v-text-field solo-inverted append-icon="mdi-magnify" v-model="keyInput" @click:append="search"/>
+                </v-col>
+            </v-row>
+        </v-container>
         <v-btn icon @click="logout">
             <v-icon>mdi-exit-to-app</v-icon>
         </v-btn>
-    </v-app-bar>
+    </v-toolbar>
+
     <router-view></router-view>
     </div>
     </transition>
@@ -55,7 +53,9 @@
                     title: "认证",
                     path:"/home/verification"
                 }
-            ]
+            ],
+            searchDialog:false,
+            keyInput:''
         }),
         methods:{
             logout:function (
@@ -63,6 +63,9 @@
                 this.$store.commit('logout')
                 localStorage.removeItem('token')
                 this.$router.go(0)
+            },
+            search:function () {
+                this.$router.push('/search/'+this.keyInput)
             }
         }
     }
