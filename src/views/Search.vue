@@ -16,9 +16,11 @@
                             background-color="indigo darken-2"
                             dark
                             @change="$router.push('/search/'+$router.currentRoute.params.key+'/'+tabs[$event].path)"
+
                     >
                         <v-tab
                                 v-for="tab in tabs"
+                                :disabled="(tab.title === '认证' && !ifRoleCanVerify($store.state.userObj.type))"
                                 :key="tab.title">
                             {{tab.title}}
                         </v-tab>
@@ -40,6 +42,7 @@
 </template>
 
 <script>
+    import {ifRoleCanVerify} from '../accessControl';
     export default {
         name: "Search",
         data:()=>({
@@ -63,7 +66,8 @@
             search:function (arg) {
                 this.$router.push('/search/'+this.keyInput)
                 this.$router.go(0)
-            }
+            },
+            ifRoleCanVerify
         }
     }
 </script>

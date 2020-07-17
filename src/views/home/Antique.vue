@@ -23,7 +23,7 @@
             </v-col>
         </v-row>
     </v-container>
-        <div style="position: fixed;right: 2em;bottom: 6em">
+        <div style="position: fixed;right: 2em;bottom: 6em" v-if="ifRoleCanImport($store.state.userObj.type)">
             <v-btn
                     dark
                     fab
@@ -55,6 +55,7 @@
     import BatchImportDialog from "../../components/BatchImportDialog";
     import NewAntiqueDialog from "../../components/NewAntiqueDialog";
     import SearchResultDialog from "../../components/SearchResultDialog";
+    import {ifRoleCanImport} from '../../accessControl';
     export default {
         name: "Antique",
         components: {SearchResultDialog, NewAntiqueDialog, BatchImportDialog, AntiqueCard},
@@ -81,7 +82,8 @@
                     this.pageNo++
                     this.busy = false;
                 }
-            }
+            },
+            ifRoleCanImport
         }
     }
 </script>

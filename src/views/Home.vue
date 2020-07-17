@@ -17,7 +17,8 @@
             >
                 <v-tab
                         v-for="tab in tabs"
-                        :key="tab.title">
+                        :key="tab.title"
+                        :disabled="(tab.title === '认证' && !ifRoleCanVerify($store.state.userObj.type))">
                     {{tab.title}}
                 </v-tab>
             </v-tabs>
@@ -30,7 +31,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <v-btn icon @click="$router.push('/admin')">
+        <v-btn icon @click="$router.push('/admin')" v-if="ifRoleCanAdmin($store.state.userObj.type)">
             <v-icon>mdi-cog-outline</v-icon>
         </v-btn>
         <v-btn icon @click="logout">
@@ -44,6 +45,8 @@
 </template>
 
 <script>
+    import {ifRoleCanVerify} from '../accessControl';
+    import {ifRoleCanAdmin} from '../accessControl';
     export default {
         name: "Home",
         data:()=>({
@@ -69,7 +72,9 @@
             },
             search:function () {
                 this.$router.push('/search/'+this.keyInput)
-            }
+            },
+            ifRoleCanVerify,
+            ifRoleCanAdmin
         }
     }
 </script>
