@@ -27,3 +27,11 @@ export default Vue.extend({
   }),
 });
 </script>
+
+<style global>
+@import "../style/fonts/fonts.css";
+
+  *{
+    font-family: PingFang,serif;
+  }
+</style>

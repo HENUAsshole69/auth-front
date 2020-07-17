@@ -2,12 +2,17 @@
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-card>
             <v-toolbar dark color="primary">
-                <v-btn icon dark @click="$emit('close')">
+                <v-btn icon dark @click="$emit('close')" :disabled="uploading">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
                 <v-toolbar-title>批量导入</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
+            <v-progress-linear
+                    indeterminate
+                    color="cyan"
+                    v-if="uploading"
+            ></v-progress-linear>
             <v-container fluid>
                 <v-row>
                     <v-col>
@@ -35,7 +40,7 @@
                                 </v-row>
                                 <v-row>
                                     <v-col>
-                                        <v-btn color="primary" @click="onFinish" :disabled="!valid">确定</v-btn>
+                                        <v-btn color="primary" @click="onFinish" :disabled="!valid || uploading">确定</v-btn>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -66,10 +71,12 @@
             },
             valid:false,
             nameRules:[v=> v.length !== 0 || '名称不能为空'],
-            despRules:[v=> v.length !== 0 || '描述不能为空']
+            despRules:[v=> v.length !== 0 || '描述不能为空'],
+            uploading:false
         }),
         methods:{
             onFinish: async function (){
+                this.uploading = true
                 console.log(this.antique)
                 try {
                     const result = await AntiqueClient.postAntique(this.antique)
@@ -77,6 +84,7 @@
                     console.log(e)
                 }finally {
                     this.$router.go(0)
+                    this.uploading = false
                 }
             }
         },
