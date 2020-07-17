@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import HelloWorld from "@/components/HelloWorld.vue";
 import store from '../store/index'
+import {ifRoleCanAdmin, ifRoleCanVerify} from "@/accessControl";
 Vue.use(VueRouter)
 
   const routes: Array<RouteConfig> = [
@@ -82,6 +83,33 @@ export default router
 router.beforeEach((to, from, next) => {
   if(to.name !== 'LogIn' && store.state.token === null){
     next('/login')
+  }else{
+    next()
+  }
+})
+
+router.beforeEach((to, from, next) => {
+    // @ts-ignore
+  if(to.name === 'VerificationSearch' && !ifRoleCanVerify(store.state.userObj.type)){
+        next(new Error())
+      }else{
+        next()
+      }
+})
+
+router.beforeEach((to, from, next) => {
+// @ts-ignore
+  if(to.name === 'Verification' && !ifRoleCanVerify(store.state.userObj.type)){
+    next(new Error())
+  }else{
+    next()
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  // @ts-ignore
+  if(to.name === 'Admin' && !ifRoleCanAdmin(store.state.userObj.type)){
+    next(new Error())
   }else{
     next()
   }

@@ -29,6 +29,13 @@
 
             <v-list-item>
                 <v-list-item-content>
+                    <v-list-item-title>编号</v-list-item-title>
+                    <v-list-item-subtitle>{{antiqueDto.id}}</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+                <v-list-item-content>
                     <v-list-item-title>名称</v-list-item-title>
                     <v-list-item-subtitle>{{antiqueDto.name}}</v-list-item-subtitle>
                 </v-list-item-content>

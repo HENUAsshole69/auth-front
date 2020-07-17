@@ -10,7 +10,6 @@
                     icon
                     v-bind="attrs"
                     v-on="on"
-                    @mouseleave="onLoad"
             >
                 <v-icon>mdi-qrcode</v-icon>
             </v-btn>
@@ -20,7 +19,7 @@
             <v-container fluid>
                 <v-row no-gutters>
                     <v-col>
-                        <canvas ref="qrCanvas"/>
+                        <q-r-canvas :content="content"/>
                     </v-col>
                 </v-row>
             </v-container>
@@ -30,12 +29,17 @@
 
 <script>
     import QRCode from "qrcode";
+    import QRCanvas from "@/components/QRCanvas";
 
     export default {
         name: "QRDisplay",
+        components: {QRCanvas},
         props:{
            content:String
         },
+        data:()=>({
+            qrMenu:false
+        }),
         methods:{
             onLoad:function () {
                 QRCode.toCanvas(this.$refs['qrCanvas'], this.content, function (error) {
