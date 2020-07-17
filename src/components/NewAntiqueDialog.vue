@@ -7,9 +7,6 @@
                 </v-btn>
                 <v-toolbar-title>批量导入</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-toolbar-items>
-                    <v-btn dark text @click="upload" :disabled="!valid">上传</v-btn>
-                </v-toolbar-items>
             </v-toolbar>
             <v-container fluid>
                 <v-row>

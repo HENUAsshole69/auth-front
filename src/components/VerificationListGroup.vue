@@ -14,19 +14,21 @@
             <v-list-item-content>
                 <v-container>
                     <v-row>
+                        <v-form v-model="valid">
                         <v-col>
-                            <v-text-field v-model="verificationDto.content"></v-text-field>
+                            <v-text-field v-model="verificationDto.content" :rules="contentRules"></v-text-field>
                         </v-col>
                         <v-col>
-                            <StageSelector @change="verificationDto.stage = $event"/>
+                            <StageSelector @change="verificationDto.stage = $event" :verified="verified"/>
                         </v-col>
+                        </v-form>
                     </v-row>
                     <v-row>
                         <v-col>
-                            <v-btn text small @click="onVerification" color="primary">批准</v-btn>
+                            <v-btn @click="onVerification" :disabled="!valid" color="primary">批准</v-btn>
                         </v-col>
                         <v-col>
-                            <v-btn text small color="error" @click="onInvalidate">拒绝批准</v-btn>
+                            <v-btn color="error" @click="onInvalidate" :disabled="antique.invalid">{{antique.invalid?'审批已被拒绝':'拒绝批准'}}</v-btn>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -58,11 +60,17 @@
     })
     export default class VerificationListGroup extends Vue{
         @Prop() readonly antique: AntiqueDto | undefined
+        valid = false
+        contentRules=[(v: string)=> v.length !== 0 || '内容不能为空']
         verifications: VerificationProcessDto[] = []
         verificationDto: VerificationProcessDto = {
             id:undefined,
             content:undefined,
             stage:undefined
+        }
+
+        get verified(){
+            return this.verifications.map((value)=>value.stage)
         }
         async mounted(){
             if(this.antique?.id !== undefined) {

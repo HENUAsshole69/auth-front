@@ -84,6 +84,7 @@
                     this.$store.commit("login",res.data)
                     AxiosInstance.defaults.headers.common['x-api-key'] = res.data;
                     localStorage.setItem('token',res.data)
+                    await this.$store.dispatch("getUserObj")
                     router.go(-1)
                 }catch (e) {
                     this.options.errorAlert = true;

@@ -18,6 +18,7 @@
             <v-list-item-subtitle>{{subtitle}}</v-list-item-subtitle>
             <v-spacer></v-spacer>
 
+            <QRDisplay :content="(antique.id).toString()"/>
             <v-btn icon :disabled="antique.verificationProcesses !== 3 || antique.invalid">
                 <v-icon>mdi-certificate</v-icon>
             </v-btn>
@@ -35,16 +36,21 @@
     import {Antique, AntiqueDto} from "@/model/Antique";
     import {Prop} from "vue-property-decorator";
     import {AntiqueClient} from "@/client/AntiqueClient";
+    import QRCode from 'qrcode'
+    import QRDisplay from "@/components/QRDisplay.vue";
     @Component({
         components:{
+            QRDisplay
 
         }
     })
     export default class AntiqueCard extends Vue{
         @Prop() readonly antique: AntiqueDto | undefined
         picSrc=""
+        qrMenu=false
         async mounted(){
             this.picSrc ='data:image/jpeg;base64, '+ (await AntiqueClient.getAntiquePic(this.antique!!.id))
+
         }
 
         get subtitle(){

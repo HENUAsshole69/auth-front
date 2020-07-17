@@ -40,6 +40,20 @@
                     <v-list-item-subtitle>{{antiqueDto.desp}}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
+
+            <v-list-item v-if="antiqueDto.invalid">
+                <v-list-item-content>
+                    <v-list-item-title>审核状态</v-list-item-title>
+                    <v-list-item-subtitle>审核失败</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item>
+                <v-list-item-content>
+                    <v-list-item-title>审核进度</v-list-item-title>
+                    <v-list-item-subtitle><verification-display :verifications="verifications"/></v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
         </v-list>
     </div>
 </template>
@@ -50,15 +64,23 @@
     import {Prop} from "vue-property-decorator";
     import {AntiqueDto} from "@/model/Antique";
     import {AntiqueClient} from "@/client/AntiqueClient";
-    @Component({})
+    import VerificationDisplay from "@/components/VerificationDisplay.vue";
+    import {VerClient} from "@/client/VerClient";
+    import {VerificationProcessDto} from "@/model/Verification";
+    @Component({
+        components: {VerificationDisplay}
+    })
     export default class AntiqueDetail extends Vue{
         @Prop() readonly id: number | undefined
         private antiqueDto: AntiqueDto | undefined
         private picSrc=""
+        verifications: VerificationProcessDto[] = []
         async mounted(){
             if(this.id == undefined) return
             this.antiqueDto = await AntiqueClient.getAntiqueDto(this.id)
             this.picSrc ='data:image/jpeg;base64, '+ (await AntiqueClient.getAntiquePic(this.antiqueDto?.id))
+            const result = await VerClient.getVerification(this.antiqueDto?.id)
+            this.verifications.push(...result)
         }
     }
 </script>
