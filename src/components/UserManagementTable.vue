@@ -1,8 +1,8 @@
 <template>
     <v-data-table
-        @update:options="onUpdate"
-        :headers="headers"
-        :items="items"
+            @update:options="onUpdate"
+            :headers="headers"
+            :items="items"
     >
         <template v-slot:item.verifiable="{ item }">
             <user-verifiable-select :verifiable="item.verifiable" @change="replaceArr(item.verifiable,$event)"/>
@@ -30,7 +30,7 @@
                 sortable: true,
                 value: 'name',
             },
-                { text: '图片', value: 'verifiable' },
+                { text: '审核权限', value: 'verifiable' },
                 { text: '删除', value: 'actions', sortable: false },],
             items:[]
         }),

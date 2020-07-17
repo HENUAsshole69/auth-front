@@ -1,4 +1,4 @@
-import { VerificationProcess } from './Verification';
+import {VerificationProcess, VerificationProcessStage} from './Verification';
 
 export interface UserInfo {
     cell: string;
@@ -14,6 +14,7 @@ export interface User {
     name: string;
     type: UserType;
     verificationProcesses: VerificationProcess[];
+    verifiable: VerificationProcessStage[];
 }
 
 export interface Credential {
@@ -32,6 +33,8 @@ class RegisterUserObj implements User{
         this.type = type
         this.verificationProcesses = []
     }
+
+    verifiable: VerificationProcessStage[] =[];
 }
 
 class RegisterInfoObj implements UserInfo {

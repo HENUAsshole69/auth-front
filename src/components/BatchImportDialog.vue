@@ -149,6 +149,7 @@
                     this.uploadPercentage = (finished / this.antiques.length)*100
                 }
                 this.$emit('close')
+                this.$router.go(0)
             }
         }
     }

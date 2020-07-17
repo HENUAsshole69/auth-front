@@ -31,7 +31,7 @@
                             <UserManagementTable/>
                         </v-tab-item>
                         <v-tab-item>
-
+                            <LoggingTable/>
                         </v-tab-item>
                     </v-tabs-items>
                 </v-col>
@@ -42,9 +42,10 @@
 
 <script>
     import UserManagementTable from "../components/UserManagementTable";
+    import LoggingTable from "../components/LoggingTable";
     export default {
         name: "Admin",
-        components: {UserManagementTable},
+        components: {LoggingTable, UserManagementTable},
         data:()=>({
             tab : null
         })

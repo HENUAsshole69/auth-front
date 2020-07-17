@@ -30,6 +30,9 @@
                 </v-col>
             </v-row>
         </v-container>
+        <v-btn icon @click="$router.push('/admin')">
+            <v-icon>mdi-cog-outline</v-icon>
+        </v-btn>
         <v-btn icon @click="logout">
             <v-icon>mdi-exit-to-app</v-icon>
         </v-btn>
