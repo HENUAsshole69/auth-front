@@ -5,7 +5,7 @@
                 <v-btn icon dark @click="$emit('close')" :disabled="uploading">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
-                <v-toolbar-title>批量导入</v-toolbar-title>
+                <v-toolbar-title>新增文物</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
             <v-progress-linear
