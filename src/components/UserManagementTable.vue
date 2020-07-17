@@ -8,6 +8,10 @@
             <user-verifiable-select :verifiable="item.verifiable" @change="replaceArr(item.verifiable,$event)"/>
         </template>
 
+        <template v-slot:item.type="{ item }">
+            <role-selector :role="item.type" @change="item.type = $event"/>
+        </template>
+
         <template v-slot:item.actions="{ item }">
             <v-btn icon @click="upload(item)">
                 <v-icon>mdi-content-save</v-icon>
@@ -19,10 +23,11 @@
 <script>
     import {UserClient} from "../client/UserClient";
     import UserVerifiableSelect from "./UserVerifiableSelect";
+    import RoleSelector from "./RoleSelector";
 
     export default {
         name: "UserManagementTable",
-        components: {UserVerifiableSelect},
+        components: {RoleSelector, UserVerifiableSelect},
         data:()=>({
             headers:[{
                 text: '名称',
@@ -31,11 +36,13 @@
                 value: 'name',
             },
                 { text: '审核权限', value: 'verifiable' },
+                { text: '用户类型', value: 'type' },
                 { text: '删除', value: 'actions', sortable: false },],
             items:[]
         }),
         methods:{
             onUpdate:async function (val) {
+                if(val.page - 1 === 0)this.items.length = 0
                 const content =(await UserClient.getAllUser(val.page - 1,val.itemsPerPage)).content
                 this.items.push(...content)
             },
@@ -45,6 +52,7 @@
             },
             upload(obj){
                 UserClient.updateVerificationAuth(obj.id,obj.verifiable)
+                UserClient.updateUserType(obj.id,obj.type)
             }
         }
     }

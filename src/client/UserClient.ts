@@ -1,5 +1,5 @@
 import AxiosInstance from "./AxiosInstance";
-import {Credential, User} from '@/model/User'
+import {Credential, User, UserType} from '@/model/User'
 import {VerificationProcessStage} from "@/model/Verification";
 import {Page} from "@/model/Page";
 export class UserClient{
@@ -17,5 +17,9 @@ export class UserClient{
     }
     public static async getUser(): Promise<User>{
         return (await AxiosInstance.get('/user',{})).data as User
+    }
+
+    public static updateUserType(userId: number, type: UserType){
+        return AxiosInstance.put('/user/type/'+userId+'?type='+type)
     }
 }

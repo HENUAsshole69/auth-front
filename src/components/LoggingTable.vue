@@ -32,6 +32,7 @@
         }),
         methods:{
             onUpdate:async function (val) {
+                if(val.page - 1 === 0)this.items.length = 0
                 const content =(await LoggingClient.getLogPage(val.page - 1,val.itemsPerPage)).content
                 this.items.push(...content)
             },

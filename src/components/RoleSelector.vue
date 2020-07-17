@@ -1,7 +1,7 @@
 <template>
     <v-select
             v-bind:items="items"
-            v-model="value"
+            v-model="roleValue"
             label="用户类型"
             @change="$emit('change', $event)"
     ></v-select>
@@ -11,8 +11,11 @@
     export default {
 
         name: "RoleSelector",
+        props:{
+            role:String
+        },
         data:()=>({
-            value:undefined,
+            roleValue:undefined,
             items:[
                 {text:'个人',value:'INDIVIDUAL'},
                 {text:'拍卖行',value:'AUCTIONEER'},
@@ -21,7 +24,10 @@
                 {text:'司法部门',value:'JUDICIAL_DEPT'},
                 {text:'管理员',value:'ADMIN'}
             ]
-        })
+        }),
+        mounted() {
+            this.roleValue = this.role
+        }
     }
 </script>
 

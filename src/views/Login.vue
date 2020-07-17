@@ -7,7 +7,7 @@
                     <v-layout align-center justify-center>
                         <v-flex class="login-form text-xs-center">
                             <div class="display-1 mb-3">
-                                <v-icon class="mr-2" large="large"> mdi-bank-outline</v-icon> 文物信息管理系统
+                                <v-icon class="mr-2" large="large"> mdi-bank-outline</v-icon> <h3 style="display: inline-block">文物信息管理系统</h3>
                             </div>
                             <v-card light="light">
                                 <v-progress-linear
@@ -32,7 +32,6 @@
                                     </div>
                                     <v-form>
                                         <v-text-field v-model="user.name" light="light" prepend-icon="mdi-account" label="用户名"></v-text-field>
-                                        <RoleSelector  v-if="!options.isLoggingIn" @change="user.type = $event"/>
                                         <v-text-field v-model="user.realName" v-if="!options.isLoggingIn" light="light" prepend-icon="mdi-account" label="真名"></v-text-field>
                                         <v-text-field v-model="user.cell" v-if="!options.isLoggingIn" type="number" light="light" prepend-icon="mdi-phone" label="电话"></v-text-field>
                                         <v-text-field v-model="user.password" light="light" prepend-icon="mdi-lock" label="密码" type="password"></v-text-field>
@@ -65,10 +64,10 @@
     import AxiosInstance from "../client/AxiosInstance";
     export default Vue.extend( {
         name: "login",
-        components: {RoleSelector},
+        components: {},
         data:()=>({
             user:{
-
+                type:'INDIVIDUAL'
             },
             options: {
                 isLoggingIn: true,
