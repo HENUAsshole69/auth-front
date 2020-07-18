@@ -31,7 +31,7 @@
         </template>
 
         <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length"><verification-detail :antique="item"/></td>
+            <td :colspan="headers.length"><verification-stepper :key="rerenderKey" :antique="item" @success="rerenderKey++" @error="rerenderKey++"/></td>
         </template>
     </v-data-table>
 </template>
@@ -39,10 +39,11 @@
 <script>
     import {AntiqueClient} from "../../client/AntiqueClient";
     import VerificationDetail from "./VerificationDetail";
+    import VerificationStepper from "./VerificationStepper";
 
     export default {
         name: "VerificationTable",
-        components: {VerificationDetail},
+        components: {VerificationStepper},
         props:{
             keyWord:String
         },
@@ -58,7 +59,8 @@
                 { text: '描述', value: 'desp' },
                 { text: '详情', value: 'details',sortable: false },
                 { text: '审核', value: 'data-table-expand' }],
-            items:[]
+            items:[],
+            rerenderKey:0
         }),
         watch:{
         },
@@ -69,10 +71,12 @@
                     this.items.length = 0
                     const content = (await AntiqueClient.searchAntique(this.keyWord,val.page - 1, val.itemsPerPage)).content
                     this.items.push(...content)
+                    console.log(content)
                 }else{
                     this.items.length = 0
                     const content = (await AntiqueClient.getAntique(val.page - 1, val.itemsPerPage)).content
                     this.items.push(...content)
+                    console.log(content)
                 }
                 this.$emit('loadEnd')
             },

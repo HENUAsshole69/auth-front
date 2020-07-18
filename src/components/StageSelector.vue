@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import {StageSelect} from "@/model/Verification";
+    import {StageSelectNameMap} from "@/model/Verification";
 
     export default {
         props:{
@@ -24,7 +24,7 @@
         mounted() {
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const model = this
-            this.items.push(...StageSelect.filter(function (value) {
+            this.items.push(...StageSelectNameMap.filter(function (value) {
                 return model.$store.state.userObj.verifiable.includes(value.value) && !model.verified.includes(value.value)
             }))
         }

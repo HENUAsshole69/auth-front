@@ -15,7 +15,7 @@ export interface VerificationProcessDto {
     stage: VerificationProcessStage|undefined;
 }
 
-export const StageSelect  = [
+export const StageSelectNameMap  = [
     {text:'第一步',value:'STAGE_ONE'},
     {text:'第二步',value:'STAGE_TWO'},
     {text:'第三步',value:'STAGE_THREE'},

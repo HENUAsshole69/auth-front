@@ -18,9 +18,7 @@
                 <v-col cols="auto" style="height: 100%">
                     <div style="width: 256px;height: 100%;">
                         <v-navigation-drawer permanent
-                                             left
-
-                        >
+                                             left>
                             <v-list>
                                 <v-list-item>
                                     <v-list-item-icon>

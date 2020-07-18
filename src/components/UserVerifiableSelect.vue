@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import {StageSelect} from "../model/Verification";
+    import {StageSelectNameMap} from "../model/Verification";
 
     export default {
         name: "UserVerifiableSelect",
@@ -20,7 +20,7 @@
         },
         data:()=>({
             values:[],
-            items:StageSelect
+            items:StageSelectNameMap
         }),
         mounted() {
             this.values.push(...this.verifiable)

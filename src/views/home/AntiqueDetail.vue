@@ -48,17 +48,10 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item v-if="antiqueDto.invalid">
-                <v-list-item-content>
-                    <v-list-item-title>审核状态</v-list-item-title>
-                    <v-list-item-subtitle>审核失败</v-list-item-subtitle>
-                </v-list-item-content>
-            </v-list-item>
-
             <v-list-item>
                 <v-list-item-content>
-                    <v-list-item-title>审核进度</v-list-item-title>
-                    <v-list-item-subtitle><verification-display :verifications="verifications"/></v-list-item-subtitle>
+                    <v-list-item-title>审核状态</v-list-item-title>
+                    <v-list-item-subtitle><verification-stepper :antique="antiqueDto"/></v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -74,8 +67,9 @@
     import VerificationDisplay from "@/components/VerificationDisplay.vue";
     import {VerClient} from "@/client/VerClient";
     import {VerificationProcessDto} from "@/model/Verification";
+    import VerificationStepper from "@/components/classic/VerificationStepper.vue";
     @Component({
-        components: {VerificationDisplay}
+        components: {VerificationStepper, VerificationDisplay}
     })
     export default class AntiqueDetail extends Vue{
         @Prop() readonly id: number | undefined

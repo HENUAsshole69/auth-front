@@ -6,7 +6,7 @@ import {ifRoleCanAdmin, ifRoleCanVerify} from "@/accessControl";
 Vue.use(VueRouter)
 
   const routes: Array<RouteConfig> = [
-    { path: '/', redirect:  { name: 'Home' } },
+    { path: '/', redirect:  {path:'/home' } },
     {
       path: '/antiqueDetail/:id',
       name: 'AntiqueDetail',
@@ -15,7 +15,6 @@ Vue.use(VueRouter)
     },
   {
     path: '/home',
-    name: 'Home',
     component: ()=>import('../views/Home.vue'),
     children:[
       { path: '', redirect:  { name: 'Antique' } },
@@ -41,11 +40,6 @@ Vue.use(VueRouter)
       }
     ]
   },
-    {
-      path: '/admin',
-      name: 'Admin',
-      component: ()=>import('../views/Admin.vue'),
-    },
     {
       path: '/search/:key',
       name: 'Search',
