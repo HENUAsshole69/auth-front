@@ -1,49 +1,28 @@
 <template>
     <transition
             name="fade"
-    >
-    <div>
+    ><div>
         <v-progress-linear
                 indeterminate
                 color="cyan"
-                v-if="busy"
+                v-if="loading"
         ></v-progress-linear>
-    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0">
+        <v-card flat>
+        <v-card-title>
 
-        <BatchImportDialog @close="batchImportDialog = false" :dialog="batchImportDialog"/>
-        <NewAntiqueDialog @close="newAntiqueDialog = false" :dialog="newAntiqueDialog"/>
-        <SearchResultDialog @close="searchTest = false" :dialog="searchTest"/>
-        <v-container fluid>
-        <v-row dense>
-            <v-col
-                    v-for="card in cards"
-                    :key="card.title">
-                    <!--:cols="card.flex"-->
-                <AntiqueCard :antique="card"/>
-            </v-col>
-        </v-row>
-    </v-container>
-        <div style="position: fixed;right: 2em;bottom: 6em" v-if="ifRoleCanImport($store.state.userObj.type)">
-            <v-btn
-                    dark
-                    fab
-                    color="pink"
-                    v-on:click="batchImportDialog = true"
-            >
-                <v-icon>mdi-playlist-plus</v-icon>
-            </v-btn>
-        </div>
-        <div style="position: fixed;right: 2em;bottom: 2em">
-        <v-btn
-                dark
-                fab
-                color="pink"
-                v-on:click="newAntiqueDialog = true"
-        >
-            <v-icon>mdi-plus</v-icon>
-        </v-btn>
-        </div>
-    </div>
+            <v-spacer></v-spacer>
+            <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="搜索用户名或文物名称进行搜索"
+                    single-line
+                    hide-details
+                    @loadstart="loading = true"
+                    @loadend="loading = false"
+            ></v-text-field>
+        </v-card-title>
+        <antique-table :key-word="search" :key="search"/>
+        </v-card>
     </div>
     </transition>
 </template>
@@ -56,13 +35,15 @@
     import NewAntiqueDialog from "../../components/NewAntiqueDialog";
     import SearchResultDialog from "../../components/SearchResultDialog";
     import {ifRoleCanImport} from '../../accessControl';
+    import AntiqueTable from "../../components/classic/AntiqueTable";
     export default {
         name: "Antique",
-        components: {SearchResultDialog, NewAntiqueDialog, BatchImportDialog, AntiqueCard},
+        components: {AntiqueTable},
         data:()=>({
             batchImportDialog:false,
             newAntiqueDialog:false,
             searchTest:false,
+            loading:false,
             search:'',
             cards: [
             ],
@@ -72,6 +53,8 @@
         }),
         directives:{
             infiniteScroll
+        },
+        watch:{
         },
         methods: {
             loadMore: async function() {

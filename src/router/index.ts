@@ -28,6 +28,16 @@ Vue.use(VueRouter)
         path: 'verification',
         name: 'Verification',
         component: ()=>import('../views/home/Verification.vue')
+      },
+      {
+        path: 'admin',
+        name: 'Admin',
+        component: ()=>import('../views/Admin.vue'),
+      },
+      {
+        path: 'log',
+        name: 'Log',
+        component: ()=>import('../views/Log.vue'),
       }
     ]
   },
@@ -108,7 +118,7 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   // @ts-ignore
-  if(to.name === 'Admin' && !ifRoleCanAdmin(store.state.userObj.type)){
+  if((to.name === 'Admin' || to.name === 'Log') && !ifRoleCanAdmin(store.state.userObj.type)){
     next(new Error())
   }else{
     next()

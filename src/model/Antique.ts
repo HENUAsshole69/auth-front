@@ -22,3 +22,4 @@ export interface AntiqueDto {
 }
 
 export type AntiqueType = "PORCELAIN" | "JADE" | "PAINTING_CALLIGRAPHY" | "METAL" | "MISC";
+

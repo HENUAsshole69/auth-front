@@ -1,86 +1,73 @@
 <template>
     <transition
             name="fade"
-
-    >
-    <div>
+    ><div>
         <v-progress-linear
                 indeterminate
                 color="cyan"
-                v-if="busy"
+                v-if="loading"
         ></v-progress-linear>
-    <div  v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0">
-        <v-container fluid>
-            <v-row no-gutters>
-                <!--<v-col
-                        v-for="card in cards"
-                        :key="card.title">
-                    &lt;!&ndash;:cols="card.flex"&ndash;&gt;
-                    <AntiqueCard :antique="card"/>
-                </v-col>-->
-                <v-col>
-                <v-list>
-                    <v-list-group
-                            v-for="item in cards"
-                            :key="item.name"
-                            v-model="item.active"
-                            :prepend-icon="item.action"
-                            no-action
-                    >
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title v-text="item.name"></v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-                        <VerificationListGroup :antique="item"/>
+        <v-card flat>
+            <v-card-title>
 
-                        <v-list-item
-                                v-for="subItem in item.items"
-                                :key="subItem.name"
-                        >
-                            <v-list-item-content>
-                                <v-list-item-title v-text="subItem.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list-group>
-                </v-list>
-                </v-col>
-            </v-row>
-        </v-container>
-    </div>
-
+                <v-spacer></v-spacer>
+                <v-text-field
+                        v-model="search"
+                        append-icon="mdi-magnify"
+                        label="搜索用户名或文物名称进行搜索"
+                        single-line
+                        hide-details
+                        @loadstart="loading = true"
+                        @loadend="loading = false"
+                ></v-text-field>
+            </v-card-title>
+            <verification-table :key-word="search" :key="search"/>
+        </v-card>
     </div>
     </transition>
 </template>
 
 <script>
     import infiniteScroll from 'vue-infinite-scroll'
-    import {VerClient} from "../../client/VerClient";
-    import VerificationListGroup from "../../components/VerificationListGroup";
+    import {AntiqueClient} from "../../client/AntiqueClient";
+    import AntiqueCard from "../../components/AntiqueCard";
+    import BatchImportDialog from "../../components/BatchImportDialog";
+    import NewAntiqueDialog from "../../components/NewAntiqueDialog";
+    import SearchResultDialog from "../../components/SearchResultDialog";
+    import {ifRoleCanImport} from '../../accessControl';
+    import AntiqueTable from "../../components/classic/AntiqueTable";
+    import VerificationTable from "../../components/classic/VerificationTable";
     export default {
-        name: "Verification",
-        components: {VerificationListGroup},
+        name: "Antique",
+        components: {VerificationTable},
         data:()=>({
+            batchImportDialog:false,
+            newAntiqueDialog:false,
+            searchTest:false,
+            loading:false,
+            search:'',
             cards: [
             ],
             busy:false,
             pageNo:0,
-            pageLen:10
+            pageLen:10,
         }),
         directives:{
             infiniteScroll
         },
+        watch:{
+        },
         methods: {
             loadMore: async function() {
                 this.busy = true;
-                const result = await VerClient.getAntiqueNeedVerification(this.pageNo,this.pageLen)
-                console.log(result)
+                const result = await AntiqueClient.getAntique(this.pageNo,this.pageLen)
                 this.cards.push(...result.content)
                 if(!result.last) {
                     this.pageNo++
                     this.busy = false;
                 }
-            }
+            },
+            ifRoleCanImport
         }
     }
 </script>

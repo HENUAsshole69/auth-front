@@ -5,11 +5,19 @@
             @update:options="onUpdate"
             :headers="headers"
             :items="items"
+            :footer-props="{
+                'items-per-page-text': '每页显示项数:',
+                'items-per-page-all-text': '所有项'
+            }"
     >
         <!--<template v-slot:item.verifiable="{ item }">
             <user-verifiable-select :verifiable="item.verifiable" @change="replaceArr(item.verifiable,$event)"/>
         </template>-->
-
+        <template v-slot:footer.page-text="{pageStart,
+  pageStop,
+  itemsLength}">
+            {{'当前第'+pageStart+'页，共'+pageStop+'页，共'+itemsLength+'条目'}}
+        </template>
     </v-data-table>
 </template>
 

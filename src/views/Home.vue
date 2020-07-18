@@ -4,42 +4,81 @@
     <v-toolbar
             color="indigo darken-2"
             dark
-
     >
-
-
-        <template v-slot:extension>
-            <v-tabs
-                    fixed-tabs
-                    background-color="indigo darken-2"
-                    dark
-                    @change="$router.push(tabs[$event].path)"
-            >
-                <v-tab
-                        v-for="tab in tabs"
-                        :key="tab.title"
-                        :disabled="(tab.title === '认证' && !ifRoleCanVerify($store.state.userObj.type))">
-                    {{tab.title}}
-                </v-tab>
-            </v-tabs>
-        </template>
-
-        <v-container fluid style="margin-top: 1.9em">
-            <v-row>
-                <v-col>
-                    <v-text-field solo-inverted append-icon="mdi-magnify" v-model="keyInput" @click:append="search"/>
-                </v-col>
-            </v-row>
-        </v-container>
-        <v-btn icon @click="$router.push('/admin')" v-if="ifRoleCanAdmin($store.state.userObj.type)">
-            <v-icon>mdi-cog-outline</v-icon>
-        </v-btn>
-        <v-btn icon @click="logout">
-            <v-icon>mdi-exit-to-app</v-icon>
+        <h3>文物管理系统</h3>
+<v-spacer/>
+        <v-btn outlined @click="logout">
+            注销
+            <v-icon right>mdi-exit-to-app</v-icon>
         </v-btn>
     </v-toolbar>
+        <v-container fluid style="padding: 0;height: 100%">
 
-    <router-view></router-view>
+            <v-row style="height: 100%" no-gutters class="flex-nowrap">
+                <v-col cols="auto" style="height: 100%">
+                    <div style="width: 256px;height: 100%;">
+                        <v-navigation-drawer permanent
+                                             left
+
+                        >
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-icon>
+                                        <v-icon>mdi-home</v-icon>
+                                    </v-list-item-icon>
+
+                                    <v-list-item-title>主页</v-list-item-title>
+                                </v-list-item>
+
+                                <v-list-group
+                                        prepend-icon="mdi-account-circle"
+                                        value="true"
+                                >
+                                    <template v-slot:activator>
+                                        <v-list-item-title>文物</v-list-item-title>
+                                    </template>
+
+                                    <v-list-item
+                                            v-for="(tab, i) in antiqueTabs"
+                                            :key="i"
+                                            link
+                                            @click="$router.push(tab.path)"
+                                    >
+                                        <v-list-item-title v-text="tab.title"></v-list-item-title>
+                                        <v-list-item-icon>
+                                            <v-icon v-text="tab.icon"></v-icon>
+                                        </v-list-item-icon>
+                                    </v-list-item>
+                                </v-list-group>
+
+                                <v-list-group
+                                        prepend-icon="mdi-account-circle"
+                                        value="true"
+                                >
+                                    <template v-slot:activator>
+                                        <v-list-item-title>管理</v-list-item-title>
+                                    </template>
+
+                                    <v-list-item
+                                            v-for="(tab, i) in adminTabs"
+                                            :key="i"
+                                            link
+                                            @click="$router.push(tab.path)"
+                                    >
+                                        <v-list-item-title v-text="tab.title"></v-list-item-title>
+                                        <v-list-item-icon>
+                                            <v-icon v-text="tab.icon"></v-icon>
+                                        </v-list-item-icon>
+                                    </v-list-item>
+                                </v-list-group>
+                            </v-list>
+                        </v-navigation-drawer >
+                    </div>
+                </v-col>
+                <v-col cols="auto" class="flex-grow-1"><router-view></router-view></v-col>
+            </v-row>
+        </v-container>
+
     </div>
     </transition>
 </template>
@@ -50,14 +89,28 @@
     export default {
         name: "Home",
         data:()=>({
-            tabs:[
+            antiqueTabs:[
                 {
-                    title:"文物",
+                    title:"浏览",
+                    icon:'mdi-castle',
                     path:"/home/antique"
                 },
                 {
-                    title: "认证",
+                    title: "管理",
+                    icon:'mdi-briefcase',
                     path:"/home/verification"
+                }
+            ],
+            adminTabs:[
+                {
+                    title:"用户管理",
+                    icon:'mdi-castle',
+                    path:"/home/admin"
+                },
+                {
+                    title: "日志",
+                    icon:'mdi-briefcase',
+                    path:"/home/log"
                 }
             ],
             searchDialog:false,
