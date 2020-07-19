@@ -43,6 +43,11 @@ Vue.use(VueRouter)
         name: 'NewAntique',
         component: ()=>import('../views/NewAntiqueDialog.vue'),
       },
+      {
+        path: 'batchImport',
+        name: 'BatchImport',
+        component: ()=>import('../components/BatchImportPage.vue'),
+      },
     ]
   },
     {

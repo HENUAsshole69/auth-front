@@ -19,7 +19,7 @@
                                     <div class="subheading">
                                         <transition  name="fade">
                                             <v-alert type="error" v-if="options.errorAlert">
-                                            登录错误
+                                            用户名或密码错误
                                             </v-alert>
                                         </transition>
                                         <transition  name="fade">
@@ -30,18 +30,18 @@
                                         <template v-if="options.isLoggingIn">登录</template>
                                         <template v-else>注册</template>
                                     </div>
-                                    <v-form>
-                                        <v-text-field v-model="user.name" light="light" prepend-icon="mdi-account" label="用户名"></v-text-field>
-                                        <v-text-field v-model="user.realName" v-if="!options.isLoggingIn" light="light" prepend-icon="mdi-account" label="真名"></v-text-field>
-                                        <v-text-field v-model="user.cell" v-if="!options.isLoggingIn" type="number" light="light" prepend-icon="mdi-phone" label="电话"></v-text-field>
-                                        <v-text-field v-model="user.password" light="light" prepend-icon="mdi-lock" label="密码" type="password"></v-text-field>
-                                        <v-btn v-if="options.isLoggingIn" @click.prevent="" block="block" type="submit"  :disabled="loading" @click="login">登录</v-btn>
-                                        <v-btn v-else block="block" type="submit" @click.prevent="(options.isLoggingIn = true)"  :disabled="loading"  @click="register">注册</v-btn>
+                                    <v-form v-model="valid">
+                                        <v-text-field v-model="user.name" :rules="notEmptyRules" light="light" prepend-icon="mdi-account" label="用户名"></v-text-field>
+                                        <v-text-field v-model="user.realName" :rules="notEmptyRules"  v-if="!options.isLoggingIn" light="light" prepend-icon="mdi-account" label="真名"></v-text-field>
+                                        <v-text-field v-model="user.cell" :rules="notEmptyRules"  v-if="!options.isLoggingIn" type="number" light="light" prepend-icon="mdi-phone" label="电话"></v-text-field>
+                                        <v-text-field v-model="user.password" :rules="notEmptyRules"  light="light" prepend-icon="mdi-lock" label="密码" type="password"></v-text-field>
+                                        <v-btn v-if="options.isLoggingIn" @click.prevent="" block="block" type="submit"  :disabled="!loading && !valid" @click="login">登录</v-btn>
+                                        <v-btn v-else block="block" type="submit" @click.prevent="(options.isLoggingIn = true)"  :disabled="!loading && !valid"  @click="register">注册</v-btn>
                                     </v-form>
                                 </v-card-text>
                             </v-card>
                             <div v-if="options.isLoggingIn">没有账号?点此注册
-                                <v-btn light="light" @click="(options.isLoggingIn = false)"  :disabled="loading" >注册</v-btn>
+                                <v-btn light="light" @click="goToRegister"  :disabled="loading" >注册</v-btn>
                             </div>
                         </v-flex>
                     </v-layout>
@@ -67,6 +67,10 @@
         components: {},
         data:()=>({
             user:{
+                name:'',
+                realName:'',
+                cell:'',
+                password:'',
                 type:'INDIVIDUAL'
             },
             options: {
@@ -75,7 +79,9 @@
                 successAlert: false
             },
             ok:false,
-            loading:false
+            loading:false,
+            valid:true,
+            notEmptyRules:[v=> v.length !== 0  || '该项不能为空'],
         }),
         beforeMount() {
             if(this.$store.state.token != null){
@@ -93,9 +99,14 @@
                     AxiosInstance.defaults.headers.common['x-api-key'] = res.data;
                     localStorage.setItem('token',res.data)
                     await this.$store.dispatch("getUserObj")
-                    router.go(-1)
+                    await router.push('/')
                 }catch (e) {
                     this.options.errorAlert = true;
+                    // eslint-disable-next-line @typescript-eslint/no-this-alias
+                    const model = this;
+                    setTimeout(function () {
+                        model.options.errorAlert = false;
+                    },1000)
                 }finally {
                     this.loading = false
                 }
@@ -106,12 +117,16 @@
                     this.loading = true
                     const result = await UserClient.register(new RegisterObj(this.user.password, this.user.name, this.user.type, this.user.cell, this.user.realName))
                     this.successAlert = true
-                    router.go(-1)
+                    await router.push('/')
                 }catch (e) {
                     this.errorAlert = true
                 }finally {
                     this.loading = false
                 }
+            },
+            goToRegister:function () {
+                this.valid = false
+                this.options.isLoggingIn = false
             }
         }
 

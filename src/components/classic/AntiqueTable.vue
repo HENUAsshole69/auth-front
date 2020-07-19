@@ -17,7 +17,7 @@
             {{'从第'+pageStart+'项至第'+pageStop+'项，共'+itemsLength+'项'}}
         </template>
         <template v-slot:item.user="{ item }">
-           {{item.user}}
+           {{item.userName}}
         </template>
 
         <!--<template v-slot:item.type="{ item }">
@@ -25,6 +25,8 @@
         </template>-->
 
         <template v-slot:item.details="{ item }">
+            <cert-downloader :antique="item"/>
+            <q-r-display :content="item.id.toString()"/>
             <v-btn icon @click="$router.push('/antiqueDetail/'+item.id)">
                 <v-icon>mdi-dots-horizontal-circle-outline</v-icon>
             </v-btn>
@@ -34,10 +36,12 @@
 
 <script>
     import {AntiqueClient} from "../../client/AntiqueClient";
+    import QRDisplay from "../QRDisplay";
+    import CertDownloader from "./CertDownloader";
 
     export default {
         name: "AntiqueTable",
-        components: {},
+        components: {CertDownloader, QRDisplay},
         props:{
             keyWord:String
         },
@@ -59,8 +63,8 @@
         },
         methods:{
             onUpdate:async function(val) {
-                this.$emit('loadStart')
-                if(/\s*/.test(this.keyWord)) {
+                this.$emit('beforeLoad')
+                if(/[^\s]+/.test(this.keyWord)) {
                     this.items.length = 0
                     const res = (await AntiqueClient.searchAntique(this.keyWord,val.page - 1, val.itemsPerPage))
                     this.totalLength = res.totalElements
@@ -71,7 +75,7 @@
                     this.totalLength = res.totalElements
                     this.items.push(...res.content)
                 }
-                this.$emit('loadEnd')
+                this.$emit('loaded')
             },
             replaceArr(arr,n){
                 arr.length  = 0;

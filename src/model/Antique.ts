@@ -16,7 +16,8 @@ export interface AntiqueDto {
     id: number;
     name: string;
     type: AntiqueType;
-    invalid: boolean|null
+    invalid: boolean|null;
+    userName: string;
     verificationProcesses: number;
     pic:Blob|null;
 }

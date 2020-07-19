@@ -32,7 +32,7 @@
     import infiniteScroll from 'vue-infinite-scroll'
     import {AntiqueClient} from "../../client/AntiqueClient";
     import AntiqueCard from "../../components/AntiqueCard";
-    import BatchImportDialog from "../../components/BatchImportDialog";
+    import BatchImportDialog from "../../components/BatchImportPage";
     import NewAntiqueDialog from "../../components/NewAntiqueDialog";
     import SearchResultDialog from "../../components/SearchResultDialog";
     export default {

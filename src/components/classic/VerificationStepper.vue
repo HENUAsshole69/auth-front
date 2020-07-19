@@ -9,7 +9,8 @@ allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== 
                         {{StageSelectNameMap[num - 1].text}}
                         <small>{{verifications[num - 1]!==undefined?verifications[num - 1].content:''}}</small>
                     </v-stepper-step>
-                    <non-final-verification-step :editable="allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)" :step="num"  :key="num" @success="$router.go(0)" @error="$router.go(0)" :antique="antique"/>
+                    <non-final-verification-step :editable="allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)" :step="num" v-if="num !== 3" :key="num" @success="$router.go(0)" @error="$router.go(0)" :antique="antique"/>
+                    <final-verification-step :editable="allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)" :step="num" v-else :key="num" @success="$router.go(0)" @error="$router.go(0)" :antique="antique"/>
                 </template>
             </v-stepper>
         </v-col>
@@ -28,12 +29,13 @@ allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== 
     import StageSelector from "@/components/StageSelector.vue";
     import VerificationDisplay from "@/components/VerificationDisplay.vue";
     import NonFinalVerificationStep from "@/components/classic/NonFinalVerificationStep.vue";
+    import FinalVerificationStep from "@/components/classic/FinalVerificationStep.vue";
     @Component({
         components:{
             NonFinalVerificationStep,
             VerificationDisplay,
-            StageSelector
-
+            StageSelector,
+            FinalVerificationStep
         }
     })
     export default class VerificationListGroup extends Vue{

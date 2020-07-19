@@ -1,7 +1,31 @@
 <template>
-    <div style="height:100%">
-       <user-management-table/>
+    <transition
+            name="fade"
+    ><div>
+        <v-progress-linear
+                indeterminate
+                color="cyan"
+                v-if="loading"
+        ></v-progress-linear>
+        <v-card flat>
+            <v-card-title>
+
+                <v-spacer></v-spacer>
+                <v-text-field
+                        v-model="search"
+                        append-icon="mdi-magnify"
+                        label="搜索用户名或文物名称进行搜索"
+                        single-line
+                        hide-details
+                        @loadstart="loading = true"
+                        @loadend="loading = false"
+
+                ></v-text-field>
+            </v-card-title>
+       <user-management-table :keyWord="search" :key="search"/>
+        </v-card>
     </div>
+    </transition>
 </template>
 
 <script>
@@ -11,7 +35,8 @@
         name: "Admin",
         components: { UserManagementTable},
         data:()=>({
-            tab : null
+            tab : null,
+            search:''
         })
     }
 </script>

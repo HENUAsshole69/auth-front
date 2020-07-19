@@ -2,7 +2,6 @@
     <v-select
             v-model="values"
             :items="items"
-            attach
             chips
             label="请选择审核权限"
             @change="$emit('change',values)"

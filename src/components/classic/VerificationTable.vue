@@ -56,7 +56,7 @@
                 value: 'name',
             },
                 { text: '序号', value: 'id' },
-                { text: '用户', value: 'user' },
+                { text: '用户', value: 'userName' },
                 { text: '描述', value: 'desp' },
                 { text: '详情', value: 'details',sortable: false },
                 { text: '审核', value: 'data-table-expand' }],
@@ -69,16 +69,16 @@
         methods:{
             onUpdate:async function(val) {
                 this.$emit('loadStart')
-                if(/\s*/.test(this.keyWord)) {
+                if(/[^\s]+/.test(this.keyWord)) {
                     this.items.length = 0
                     const res = (await AntiqueClient.searchAntique(this.keyWord,val.page - 1, val.itemsPerPage))
                     this.totalLength = res.content
                     this.items.push(...res.content)
                 }else{
                     this.items.length = 0
-                    const content = (await AntiqueClient.getAntique(val.page - 1, val.itemsPerPage)).content
-                    this.items.push(...content)
-                    console.log(content)
+                    const res = (await AntiqueClient.getAntique(val.page - 1, val.itemsPerPage))
+                    this.totalLength = res.content
+                    this.items.push(...res.content)
                 }
                 this.$emit('loadEnd')
             },

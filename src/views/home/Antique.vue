@@ -17,8 +17,8 @@
                     label="搜索用户名或文物名称进行搜索"
                     single-line
                     hide-details
-                    @loadstart="loading = true"
-                    @loadend="loading = false"
+                    @beforeLoad="loading = true"
+                    @loaded="loading = false"
             ></v-text-field>
         </v-card-title>
         <antique-table :key-word="search" :key="search"/>
@@ -31,7 +31,7 @@
     import infiniteScroll from 'vue-infinite-scroll'
     import {AntiqueClient} from "../../client/AntiqueClient";
     import AntiqueCard from "../../components/AntiqueCard";
-    import BatchImportDialog from "../../components/BatchImportDialog";
+    import BatchImportDialog from "../../components/BatchImportPage";
     import NewAntiqueDialog from "../../components/NewAntiqueDialog";
     import SearchResultDialog from "../../components/SearchResultDialog";
     import {ifRoleCanImport} from '../../accessControl';
@@ -57,15 +57,6 @@
         watch:{
         },
         methods: {
-            loadMore: async function() {
-                this.busy = true;
-                const result = await AntiqueClient.getAntique(this.pageNo,this.pageLen)
-                this.cards.push(...result.content)
-                if(!result.last) {
-                    this.pageNo++
-                    this.busy = false;
-                }
-            },
             ifRoleCanImport
         }
     }

@@ -29,7 +29,7 @@
                                 </v-list-item>
 
                                 <v-list-group
-                                        prepend-icon="mdi-account-circle"
+                                        prepend-icon="mdi-flower-poppy"
                                         value="true"
                                 >
                                     <template v-slot:activator>
@@ -53,6 +53,7 @@
                                 <v-list-group
                                         prepend-icon="mdi-account-circle"
                                         value="true"
+                                        v-if="ifRoleCanAdmin($store.state.userObj.type)"
                                 >
                                     <template v-slot:activator>
                                         <v-list-item-title>管理</v-list-item-title>
@@ -83,7 +84,7 @@
 </template>
 
 <script>
-    import {ifRoleCanVerify} from '../accessControl';
+    import {ifRoleCanImport, ifRoleCanVerify} from '../accessControl';
     import {ifRoleCanAdmin} from '../accessControl';
     import NewAntiqueDialog from "../components/NewAntiqueDialog";
     export default {
@@ -93,29 +94,34 @@
             antiqueTabs:[
                 {
                     title:"浏览",
-                    icon:'mdi-castle',
+                    icon:'mdi-open-in-app',
                     path:"/home/antique"
                 },
                 {
                     title: "管理",
-                    icon:'mdi-briefcase',
+                    icon:'mdi-file-find',
                     path:"/home/verification"
                 },
                 {
                     title: "新建",
-                    icon:'mdi-briefcase',
+                    icon:'mdi-folder-plus',
                     path:"/home/newAntique"
+                },
+                {
+                    title: "导入",
+                    icon:'mdi-application-import',
+                    path:"/home/batchImport"
                 }
             ],
             adminTabs:[
                 {
                     title:"用户管理",
-                    icon:'mdi-castle',
+                    icon:'mdi-account-box-multiple',
                     path:"/home/admin"
                 },
                 {
                     title: "日志",
-                    icon:'mdi-briefcase',
+                    icon:'mdi-post',
                     path:"/home/log"
                 }
             ],
@@ -134,6 +140,18 @@
             },
             ifRoleCanVerify,
             ifRoleCanAdmin
+        },
+        beforeMount() {
+            if(!ifRoleCanVerify(this.$store.state.userObj.type)){
+                this.antiqueTabs = this.antiqueTabs.filter(function (value) {
+                    return value.path !== "/home/verification"
+                })
+            }
+            if(!ifRoleCanImport(this.$store.state.userObj.type)){
+                this.antiqueTabs = this.antiqueTabs.filter(function (value) {
+                    return value.path !== "/home/batchImport"
+                })
+            }
         }
     }
 </script>

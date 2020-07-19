@@ -6,6 +6,11 @@ export class AntiqueClient{
     static postAntique(antique: AntiqueDto){
         return AxiosInstance.post('/antique',antique,{})
     }
+
+    static postAntiqueCert(id: number,certB64: string){
+        return AxiosInstance.post('/antique/cert/'+id,certB64,{})
+    }
+
     static async getAntique(pageNo: number,pageLen: number): Promise<Page<AntiqueDto>>{
         return (await AxiosInstance.get('/antique/page/'+pageNo+'/'+pageLen)).data
     }
@@ -18,6 +23,11 @@ export class AntiqueClient{
             return image;
         });
     }
+
+    static async getAntiqueCert(id: number){
+        return AxiosInstance.get('/antique/cert/'+id,{ responseType: 'text' })
+    }
+
     static async getAntiqueDto(id: number): Promise<AntiqueDto>{
         return (await AxiosInstance.get('/antique/'+id)).data
     }

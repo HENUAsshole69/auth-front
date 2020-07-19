@@ -39,6 +39,9 @@
     export default {
         name: "UserManagementTable",
         components: {RoleSelector, UserVerifiableSelect},
+        props:{
+            keyWord:String
+        },
         data:()=>({
             headers:[{
                 text: '名称',
@@ -54,10 +57,18 @@
         }),
         methods:{
             onUpdate:async function (val) {
-                if(val.page - 1 === 0)this.items.length = 0
-                const res =(await UserClient.getAllUser(val.page - 1,val.itemsPerPage))
-                this.totalLength = res.totalElements
-                this.items.push(...res.content)
+                if(/[^\s]+/.test(this.keyWord)) {
+                    this.items.length = 0
+                    const res =(await UserClient.searchUser(this.keyWord,val.page - 1,val.itemsPerPage))
+                    this.totalLength = res.totalElements
+                    this.items.push(...res.content)
+                }else {
+                    this.items.length = 0
+                    const res =(await UserClient.getAllUser(val.page - 1,val.itemsPerPage))
+                    this.totalLength = res.totalElements
+                    this.items.push(...res.content)
+                }
+
             },
             replaceArr(arr,n){
                 arr.length  = 0;

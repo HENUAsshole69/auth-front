@@ -2,6 +2,7 @@ import AxiosInstance from "./AxiosInstance";
 import {Credential, User, UserType} from '@/model/User'
 import {VerificationProcessStage} from "@/model/Verification";
 import {Page} from "@/model/Page";
+import {AntiqueDto} from "@/model/Antique";
 export class UserClient{
     public static login(userName: string,password: string){
         return AxiosInstance.get('/login?userName='+userName+'&password='+password)
@@ -21,5 +22,9 @@ export class UserClient{
 
     public static updateUserType(userId: number, type: UserType){
         return AxiosInstance.put('/user/type/'+userId+'?type='+type)
+    }
+
+    public static async searchUser(keyWord: string, pageNo: number, pageLen: number): Promise<Page<User>>{
+        return (await AxiosInstance.get("/user/search/page/"+pageNo+'/'+pageLen+'?key='+keyWord)).data
     }
 }

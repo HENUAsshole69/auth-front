@@ -1,11 +1,11 @@
 <template>
     <v-file-input
             accept="image/png, image/jpeg, image/bmp"
-            placeholder="选择照片"
+            placeholder="选择图片"
             prepend-icon="mdi-camera"
             @change="picToBase64($event)"
             hint="请选择图片"
-            label="照片"
+            label="图片"
             :rules="picRules"
     ></v-file-input>
 </template>

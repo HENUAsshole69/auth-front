@@ -1,26 +1,4 @@
 <template>
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-        <!--<template v-slot:activator="{ on, attrs }">
-            <v-btn
-                    color="primary"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-            >
-                Open Dialog
-            </v-btn>
-        </template>-->
-        <v-card>
-            <v-toolbar dark color="primary">
-                <v-btn icon dark @click="$emit('close')">
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
-                <v-toolbar-title>批量导入</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                    <v-btn dark text @click="upload" :disabled="!valid">上传</v-btn>
-                </v-toolbar-items>
-            </v-toolbar>
             <div v-if="uploading" style="
             width: 100%;
             height:100%">
@@ -35,9 +13,15 @@
                     {{uploadPercentage+'%'}}
                 </v-progress-circular>
             </div>
-            <v-container fluid v-else>
-                <v-row>
-                    <v-col>
+    <v-card flat v-else>
+        <v-card-title>
+
+            <v-spacer></v-spacer>
+            <v-btn  @click="upload" color="primary" :disabled="!valid">
+                上传
+                <v-icon right>mdi-exit-to-app</v-icon>
+            </v-btn>
+        </v-card-title>
                         <v-form v-model="valid">
                         <v-data-table
                                 :headers="headers"
@@ -47,7 +31,7 @@
                         >
                             <template v-slot:top>
                                 <v-toolbar flat color="white">
-                                    <v-toolbar-title>欲添加条目</v-toolbar-title>
+                                    <v-toolbar-title></v-toolbar-title>
                                     <v-divider
                                             class="mx-4"
                                             inset
@@ -58,7 +42,6 @@
                                             color="primary"
                                             dark
                                             class="mb-2"
-                                            v-bind="attrs"
                                             @click="addItem"
                                     >新增条目</v-btn>
                                 </v-toolbar>
@@ -84,16 +67,9 @@
                                     mdi-delete
                                 </v-icon>
                             </template>
-                            <template v-slot:no-data>
-                                <v-btn color="primary" @click="initialize">Reset</v-btn>
-                            </template>
                         </v-data-table>
                         </v-form>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </v-card>
-    </v-dialog>
+    </v-card>
 </template>
 
 <script>
@@ -102,9 +78,6 @@
     import {AntiqueClient} from "../client/AntiqueClient";
     export default {
         components: {PicFileInput, TypeSelector},
-        props:{
-            dialog:Boolean
-        },
         data:()=>({
             headers: [
                 {
@@ -148,8 +121,7 @@
                     finished++;
                     this.uploadPercentage = (finished / this.antiques.length)*100
                 }
-                this.$emit('close')
-                this.$router.go(0)
+                this.$router.go(-1)
             }
         }
     }
