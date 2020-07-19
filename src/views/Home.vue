@@ -47,6 +47,7 @@
                                             <v-icon v-text="tab.icon"></v-icon>
                                         </v-list-item-icon>
                                     </v-list-item>
+
                                 </v-list-group>
 
                                 <v-list-group
@@ -84,8 +85,10 @@
 <script>
     import {ifRoleCanVerify} from '../accessControl';
     import {ifRoleCanAdmin} from '../accessControl';
+    import NewAntiqueDialog from "../components/NewAntiqueDialog";
     export default {
         name: "Home",
+        components: {},
         data:()=>({
             antiqueTabs:[
                 {
@@ -97,6 +100,11 @@
                     title: "管理",
                     icon:'mdi-briefcase',
                     path:"/home/verification"
+                },
+                {
+                    title: "新建",
+                    icon:'mdi-briefcase',
+                    path:"/home/newAntique"
                 }
             ],
             adminTabs:[

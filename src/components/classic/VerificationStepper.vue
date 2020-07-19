@@ -4,11 +4,12 @@
 
             <v-stepper v-model="stepper" vertical>
                 <template v-for="num in [1,2,3]">
-                    <v-stepper-step :complete="antique.verificationProcesses >= num" :step="num" :key="0-num" :rules="[()=>!(antique.invalid && antique.verificationProcesses === num)]">
+                    <v-stepper-step :editable="
+allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)" :complete="antique.verificationProcesses >= num" :step="num" :key="0-num" :rules="[()=>!(antique.invalid && antique.verificationProcesses === num)]">
                         {{StageSelectNameMap[num - 1].text}}
-                        <small>{{verifications[num - 1].content}}</small>
+                        <small>{{verifications[num - 1]!==undefined?verifications[num - 1].content:''}}</small>
                     </v-stepper-step>
-                    <non-final-verification-step :step="num"  :key="num" @success="$router.go(0)" @error="$router.go(0)" :antique="antique"/>
+                    <non-final-verification-step :editable="allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)" :step="num"  :key="num" @success="$router.go(0)" @error="$router.go(0)" :antique="antique"/>
                 </template>
             </v-stepper>
         </v-col>
@@ -17,11 +18,12 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import {StageSelectNameMap} from "@/model/Verification";
+    import {StageSelectNameMap, VerificationProcessStage, strToStep} from "@/model/Verification";
     import Component from "vue-class-component";
     import {Prop} from "vue-property-decorator";
     import {AntiqueDto} from "@/model/Antique";
     import {VerificationProcessDto} from "@/model/Verification";
+    import {ifRoleCanVerify} from '@/accessControl';
     import {VerClient} from "@/client/VerClient";
     import StageSelector from "@/components/StageSelector.vue";
     import VerificationDisplay from "@/components/VerificationDisplay.vue";
@@ -39,6 +41,8 @@
         valid = false
         StageSelectNameMap = StageSelectNameMap
         stepper=0
+        allowedStep: Array<any>=[]
+        ifRoleCanVerify = ifRoleCanVerify
         contentRules=[(v: string)=> v.length !== 0 || '内容不能为空']
         verifications: VerificationProcessDto[] = []
         verificationDto: VerificationProcessDto = {
@@ -52,10 +56,17 @@
         }
         async mounted(){
             if(this.antique?.id !== undefined) {
-                this.stepper = this.antique.verificationProcesses
+                this.stepper = this.antique.verificationProcesses + 1
                 const result = await VerClient.getVerification(this.antique?.id)
                 this.verifications.push(...result)
             }
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            const model = this
+        this.allowedStep.push(...StageSelectNameMap.filter(function (value) {
+                return model.$store.state.userObj.verifiable.includes(value.value) && !model.verified.includes(strToStep(value.value))
+            }).map(function (v) {
+            return v.value
+        }))
         }
         async onVerification(){
             if(this.antique?.id !== undefined) {

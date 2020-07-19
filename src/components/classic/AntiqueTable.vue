@@ -3,6 +3,7 @@
             @update:options="onUpdate"
             :headers="headers"
             :items="items"
+            :server-items-length="totalLength"
             style="height: 100%"
             :footer-props="{
                 'items-per-page-text': '每页显示项数:',
@@ -13,7 +14,7 @@
         <template v-slot:footer.page-text="{pageStart,
   pageStop,
   itemsLength}">
-            {{'当前第'+pageStart+'页，共'+pageStop+'页，共'+itemsLength+'条目'}}
+            {{'从第'+pageStart+'项至第'+pageStop+'项，共'+itemsLength+'项'}}
         </template>
         <template v-slot:item.user="{ item }">
            {{item.user}}
@@ -51,7 +52,8 @@
                 { text: '用户', value: 'user' },
                 { text: '描述', value: 'desp' },
                 { text: '详情', value: 'details',sortable: false }],
-            items:[]
+            items:[],
+            totalLength:0
         }),
         watch:{
         },
@@ -60,12 +62,14 @@
                 this.$emit('loadStart')
                 if(/\s*/.test(this.keyWord)) {
                     this.items.length = 0
-                    const content = (await AntiqueClient.searchAntique(this.keyWord,val.page - 1, val.itemsPerPage)).content
-                    this.items.push(...content)
+                    const res = (await AntiqueClient.searchAntique(this.keyWord,val.page - 1, val.itemsPerPage))
+                    this.totalLength = res.totalElements
+                    this.items.push(...res.content)
                 }else{
                     this.items.length = 0
-                    const content = (await AntiqueClient.getAntique(val.page - 1, val.itemsPerPage)).content
-                    this.items.push(...content)
+                    const res = (await AntiqueClient.getAntique(val.page - 1, val.itemsPerPage))
+                    this.totalLength = res.totalElements
+                    this.items.push(...res.content)
                 }
                 this.$emit('loadEnd')
             },

@@ -1,5 +1,5 @@
 <template>
-    <v-stepper-content :step="step">
+    <v-stepper-content :step="step" v-if="editable" >
         <v-card raised class="mb-12" height="200px">
             <v-container>
                 <v-row>
@@ -14,6 +14,9 @@
         <v-btn color="primary" @click="onVerification" :disabled="!valid">批准</v-btn>
         <v-btn text color="error" @click="onInvalidate" :disabled="!valid">拒绝批准</v-btn>
     </v-stepper-content>
+    <v-stepper-content :step="step" v-else>
+
+    </v-stepper-content>
 </template>
 
 <script>
@@ -24,7 +27,8 @@
         name: "NonFinalVerificationStep",
         props:{
             step:Number,
-            antique:Object
+            antique:Object,
+            editable:Boolean
         },
         data:()=>({
             contentRules:[(v)=> v.length !== 0 || '内容不能为空'],
@@ -38,11 +42,15 @@
         mounted() {
             this.verificationDto.stage = StageSelectNameMap[this.step - 1].value
         },
+        computed:{
+            verified: function(){
+                return this.verifications.map((value)=>value.stage)
+            }
+        },
         methods:{
             async onVerification(){
                 if(this.antique?.id !== undefined) {
                     const result = await VerClient.verifyAntique(this.antique.id,this.verificationDto)
-                    alert(JSON.stringify(result))
                 }
                 this.$emit('success')
             },

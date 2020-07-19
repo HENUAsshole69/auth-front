@@ -5,6 +5,7 @@
             @update:options="onUpdate"
             :headers="headers"
             :items="items"
+            :server-items-length="totalLength"
             :footer-props="{
                 'items-per-page-text': '每页显示项数:',
                 'items-per-page-all-text': '所有项'
@@ -16,7 +17,7 @@
         <template v-slot:footer.page-text="{pageStart,
   pageStop,
   itemsLength}">
-            {{'当前第'+pageStart+'页，共'+pageStop+'页，共'+itemsLength+'条目'}}
+            {{'从第'+pageStart+'项至第'+pageStop+'项，共'+itemsLength+'项'}}
         </template>
     </v-data-table>
 </template>
@@ -36,13 +37,15 @@
             },
                 { text: '操作', value: 'opName' },
                 { text: '时间', value: 'dateTime'}],
-            items:[]
+            items:[],
+            totalLength:0
         }),
         methods:{
             onUpdate:async function (val) {
-                if(val.page - 1 === 0)this.items.length = 0
-                const content =(await LoggingClient.getLogPage(val.page - 1,val.itemsPerPage)).content
-                this.items.push(...content)
+                this.items.length = 0
+                const res =(await LoggingClient.getLogPage(val.page - 1,val.itemsPerPage))
+                this.totalLength = res.totalElements
+                this.items.push(...res.content)
             },
             replaceArr(arr,n) {
                 arr.length = 0;

@@ -37,7 +37,12 @@ Vue.use(VueRouter)
         path: 'log',
         name: 'Log',
         component: ()=>import('../views/Log.vue'),
-      }
+      },
+      {
+        path: 'newAntique',
+        name: 'NewAntique',
+        component: ()=>import('../views/NewAntiqueDialog.vue'),
+      },
     ]
   },
     {
@@ -61,7 +66,7 @@ Vue.use(VueRouter)
     {
       path: '/newAntique',
       name: 'NewAntique',
-      component: ()=>import('../views/NewAntique.vue')
+      component: ()=>import('../views/NewAntiqueDialog.vue')
     },
     {
       path: '/login',
@@ -90,15 +95,6 @@ router.beforeEach((to, from, next) => {
   }else{
     next()
   }
-})
-
-router.beforeEach((to, from, next) => {
-    // @ts-ignore
-  if(to.name === 'VerificationSearch' && !ifRoleCanVerify(store.state.userObj.type)){
-        next(new Error())
-      }else{
-        next()
-      }
 })
 
 router.beforeEach((to, from, next) => {

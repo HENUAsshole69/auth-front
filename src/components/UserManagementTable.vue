@@ -3,6 +3,7 @@
             @update:options="onUpdate"
             :headers="headers"
             :items="items"
+            :server-items-length="totalLength"
             :footer-props="{
                 'items-per-page-text': '每页显示项数:',
                 'items-per-page-all-text': '所有项'
@@ -15,7 +16,7 @@
         <template v-slot:footer.page-text="{pageStart,
   pageStop,
   itemsLength}">
-            {{'当前第'+pageStart+'页，共'+pageStop+'页，共'+itemsLength+'条目'}}
+            {{'从第'+pageStart+'项至第'+pageStop+'项，共'+itemsLength+'项'}}
         </template>
 
         <template v-slot:item.type="{ item }">
@@ -48,13 +49,15 @@
                 { text: '审核权限', value: 'verifiable' },
                 { text: '用户类型', value: 'type' },
                 { text: '删除', value: 'actions', sortable: false },],
-            items:[]
+            items:[],
+            totalLength:0
         }),
         methods:{
             onUpdate:async function (val) {
                 if(val.page - 1 === 0)this.items.length = 0
-                const content =(await UserClient.getAllUser(val.page - 1,val.itemsPerPage)).content
-                this.items.push(...content)
+                const res =(await UserClient.getAllUser(val.page - 1,val.itemsPerPage))
+                this.totalLength = res.totalElements
+                this.items.push(...res.content)
             },
             replaceArr(arr,n){
                 arr.length  = 0;

@@ -1,4 +1,5 @@
 import {UserType} from "@/model/User";
+import {StageSelectNameMap} from "@/model/Verification";
 
 export function ifRoleCanVerify(role: UserType): boolean {
     return role === "ARCH_DEPT" || role === "JUDICIAL_DEPT" || role === "ADMIN";
