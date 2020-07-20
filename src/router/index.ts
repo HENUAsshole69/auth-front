@@ -34,6 +34,11 @@ Vue.use(VueRouter)
         component: ()=>import('../views/home/WearAndTear.vue')
       },
       {
+        path: 'cred',
+        name: 'Cred',
+        component: ()=>import('../views/home/Cred.vue')
+      },
+      {
         path: 'admin',
         name: 'Admin',
         component: ()=>import('../views/Admin.vue'),

@@ -12,7 +12,6 @@ import {UserClient} from "@/client/UserClient";
 
 export default Vue.extend({
   name: 'App',
-
   components: {
   },
   async mounted() {

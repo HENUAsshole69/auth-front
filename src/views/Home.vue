@@ -86,7 +86,7 @@
 </template>
 
 <script>
-    import {ifRoleCanImport, ifRoleCanVerify} from '../accessControl';
+    import {ifRoleCanCred, ifRoleCanImport, ifRoleCanVerify, ifRoleCanWearAndTear} from '../accessControl';
     import {ifRoleCanAdmin} from '../accessControl';
     import NewAntiqueDialog from "../components/NewAntiqueDialog";
     export default {
@@ -109,8 +109,14 @@
                 {
                     sec:"文物",
                     title: "磨损信息",
-                    icon:'mdi-file-find',
+                    icon:'mdi-image-broken-variant',
                     path:"/home/wearAndTear"
+                },
+                {
+                    sec:"文物",
+                    title: "证书信息",
+                    icon:'mdi-certificate',
+                    path:"/home/cred"
                 },
                 {
                     sec:"文物",
@@ -171,6 +177,16 @@
             if(!ifRoleCanImport(this.$store.state.userObj.type)){
                 this.antiqueTabs = this.antiqueTabs.filter(function (value) {
                     return value.path !== "/home/batchImport"
+                })
+            }
+            if(!ifRoleCanWearAndTear(this.$store.state.userObj.type)){
+                this.antiqueTabs = this.antiqueTabs.filter(function (value) {
+                    return value.path !== "/home/wearAndTear"
+                })
+            }
+            if(!ifRoleCanCred(this.$store.state.userObj.type)){
+                this.antiqueTabs = this.antiqueTabs.filter(function (value) {
+                    return value.path !== "/home/cred"
                 })
             }
             // eslint-disable-next-line @typescript-eslint/no-this-alias

@@ -2,25 +2,25 @@
     <v-card
             style="margin:1em"
     >
-            <v-card-title>磨损信息</v-card-title>
+        <v-card-title>鉴定证书</v-card-title>
 
 
         <v-card-text class="text--primary">
-            <v-form v-model="valid" :disabled="antique.wearAndTear !== null">
-            <v-container>
-                <v-row>
-                    <v-col>
-                        <v-textarea v-model="wearAndTear.content" :rules="contentRules"></v-textarea>
-                    </v-col>
-                </v-row>
-            </v-container>
+            <v-form v-model="valid" :disabled="false" v-if="empty">
+                <v-container>
+                    <v-row>
+                        <v-col>
+                            <pic-file-input @change="cert = $event"/>
+                        </v-col>
+                    </v-row>
+                </v-container>
             </v-form>
+            <v-img :src="pic" v-else/>
         </v-card-text>
 
         <v-card-actions>
             <v-spacer/>
             <v-btn
-                    v-if="antique.wearAndTear === null"
                     @click="onSubmit"
                     :disabled="!valid"
                     text
@@ -34,9 +34,11 @@
 
 <script>
     import {AntiqueClient} from "../../client/AntiqueClient";
+    import PicFileInput from "../PicFileInput";
 
     export default {
-        name: "WearAndTearDetail",
+        name: "CredDetail",
+        components: {PicFileInput},
         props:{
             antique:Object
         },
@@ -45,20 +47,26 @@
             wearAndTear:{
                 content:''
             },
-            valid:false
+            valid:false,
+            cert:'',
+            empty:true,
+            pic:''
         }),
         methods:{
             async onSubmit(){
                 if(this.antique?.id !== undefined) {
-                    const result = await AntiqueClient.postAntiqueWearAndTear(this.antique.id,this.wearAndTear)
+                    await AntiqueClient.postAntiqueCert(this.antique.id,this.cert)
                 }
                 this.$emit('success')
                 this.$router.go(0)
             },
         },
-        mounted() {
-            if(this.antique.wearAndTear !== null){
-                this.wearAndTear = this.antique.wearAndTear
+        async mounted() {
+            try{
+                this.pic ='data:image/jpeg;base64, '+ (await AntiqueClient.getAntiqueCert(this.antique.id)).data
+                this.empty = false
+            }catch (e) {
+                this.empty = true
             }
         }
     }
