@@ -27,4 +27,12 @@ export class UserClient{
     public static async searchUser(keyWord: string, pageNo: number, pageLen: number): Promise<Page<User>>{
         return (await AxiosInstance.get("/user/search/page/"+pageNo+'/'+pageLen+'?key='+keyWord)).data
     }
+
+    public static updateUserPassword(userId: number, password: string){
+        return AxiosInstance.put('/user/password/'+userId+'?password='+password)
+    }
+
+    public static delUser(userId: number){
+        return AxiosInstance.delete('/user/'+userId)
+    }
 }

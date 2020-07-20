@@ -5,7 +5,7 @@ export interface UserInfo {
     realName: string;
 }
 
-export type UserType = "INDIVIDUAL" | "AUCTIONEER" | "ANTIQUE_STORE" | "ARCH_DEPT" | "JUDICIAL_DEPT" | "ADMIN";
+export type UserType = "INDIVIDUAL" | "AUCTIONEER" | "ANTIQUE_STORE" | "ARCH_DEPT" | "JUDICIAL_DEPT" | "ADMIN"|"AUTH_CENTER";
 
 
 

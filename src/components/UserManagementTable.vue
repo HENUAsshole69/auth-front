@@ -23,11 +23,18 @@
             <role-selector :role="item.type" @change="item.type = $event"/>
         </template>
 
-        <template v-slot:item.actions="{ item }">
+        <template v-slot:item.save="{ item }">
             <v-btn icon @click="upload(item)">
                 <v-icon>mdi-content-save</v-icon>
             </v-btn>
         </template>
+
+        <template v-slot:item.del="{ item }">
+            <v-btn icon @click="delUser(item)">
+                <v-icon>mdi-delete</v-icon>
+            </v-btn>
+        </template>
+
     </v-data-table>
 </template>
 
@@ -51,7 +58,8 @@
             },
                 { text: '审核权限', value: 'verifiable' },
                 { text: '用户类型', value: 'type' },
-                { text: '删除', value: 'actions', sortable: false },],
+                { text: '保存', value: 'save', sortable: false },
+                { text: '删除', value: 'del', sortable: false }],
             items:[],
             totalLength:0
         }),
@@ -77,6 +85,10 @@
             upload(obj){
                 UserClient.updateVerificationAuth(obj.id,obj.verifiable)
                 UserClient.updateUserType(obj.id,obj.type)
+            },
+            async delUser(obj){
+                await UserClient.delUser(obj.id)
+                this.$router.go(0)
             }
         }
     }

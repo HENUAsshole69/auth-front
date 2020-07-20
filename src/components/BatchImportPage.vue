@@ -13,37 +13,41 @@
                     {{uploadPercentage+'%'}}
                 </v-progress-circular>
             </div>
-    <v-card flat v-else>
-        <v-card-title>
+    <div v-else>
 
             <v-spacer></v-spacer>
-            <v-btn  @click="upload" color="primary" :disabled="!valid">
-                上传
-                <v-icon right>mdi-exit-to-app</v-icon>
-            </v-btn>
-        </v-card-title>
                         <v-form v-model="valid">
                         <v-data-table
                                 :headers="headers"
                                 :items="antiques"
-                                sort-by="calories"
-                                class="elevation-1"
+                                style="height: 100%"
+                                :footer-props="{
+                'items-per-page-text': '每页显示项数:',
+                'items-per-page-all-text': '所有项'
+            }"
+                                no-data-text="请添加导入条目"
                         >
+                            <template v-slot:footer.page-text="{pageStart,
+  pageStop,
+  itemsLength}">
+                                {{'从第'+pageStart+'项至第'+pageStop+'项，共'+itemsLength+'项'}}
+                            </template>
                             <template v-slot:top>
                                 <v-toolbar flat color="white">
                                     <v-toolbar-title></v-toolbar-title>
-                                    <v-divider
-                                            class="mx-4"
-                                            inset
-                                            vertical
-                                    ></v-divider>
                                     <v-spacer></v-spacer>
                                     <v-btn
                                             color="primary"
                                             dark
                                             class="mb-2"
                                             @click="addItem"
+                                            style="margin-right: 1em"
                                     >新增条目</v-btn>
+
+                                    <v-btn class="mb-2"  @click="upload" color="primary" :disabled="!valid">
+                                        上传
+                                        <v-icon right>mdi-exit-to-app</v-icon>
+                                    </v-btn>
                                 </v-toolbar>
                             </template>
                             <template v-slot:item.name="{ item }">
@@ -69,7 +73,7 @@
                             </template>
                         </v-data-table>
                         </v-form>
-    </v-card>
+    </div>
 </template>
 
 <script>
@@ -99,7 +103,7 @@
             uploading:false,
             uploadPercentage:0
         }),
-        name: "BatchImportDialog",
+        name: "BatchImportPage",
         methods:{
             deleteItem (item) {
                 const index = this.antiques.indexOf(item)

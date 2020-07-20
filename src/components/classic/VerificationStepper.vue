@@ -40,6 +40,7 @@ allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== 
     })
     export default class VerificationListGroup extends Vue{
         @Prop() readonly antique: AntiqueDto | undefined
+        @Prop() readonly horizontal: boolean | undefined
         valid = false
         StageSelectNameMap = StageSelectNameMap
         stepper=0

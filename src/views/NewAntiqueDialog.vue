@@ -9,7 +9,7 @@
 
         <v-card>
             <v-system-bar window>
-                <v-icon>mdi-message</v-icon>
+                <v-icon>mdi-folder-plus</v-icon>
                 <span>新增文物</span>
                 <v-spacer></v-spacer>
                 <v-icon @click="dialog = false">mdi-close</v-icon>

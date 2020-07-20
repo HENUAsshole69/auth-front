@@ -5,7 +5,7 @@
             color="indigo darken-2"
             dark
     >
-        <h3>文物管理系统</h3>
+        <h3>社会文物登记服务中心</h3>
 <v-spacer/>
         <v-btn outlined @click="logout">
             注销
@@ -13,7 +13,9 @@
         </v-btn>
     </v-toolbar>
         <v-container fluid style="padding: 0;height: 100%">
-
+            <v-row no-gutters dense>
+                    <v-col  cols="auto" class="flex-grow-1"><v-breadcrumbs :items="crumbItem" :key="crumbKey"></v-breadcrumbs><v-divider/></v-col>
+            </v-row>
             <v-row style="height: 100%" no-gutters class="flex-nowrap">
                 <v-col cols="auto" style="height: 100%">
                     <div style="width: 256px;height: 100%;">
@@ -40,7 +42,7 @@
                                             v-for="(tab, i) in antiqueTabs"
                                             :key="i"
                                             link
-                                            @click="$router.push(tab.path)"
+                                            @click="goToTab(tab)"
                                     >
                                         <v-list-item-title v-text="tab.title"></v-list-item-title>
                                         <v-list-item-icon>
@@ -63,7 +65,7 @@
                                             v-for="(tab, i) in adminTabs"
                                             :key="i"
                                             link
-                                            @click="$router.push(tab.path)"
+                                            @click="goToTab(tab)"
                                     >
                                         <v-list-item-title v-text="tab.title"></v-list-item-title>
                                         <v-list-item-icon>
@@ -93,21 +95,25 @@
         data:()=>({
             antiqueTabs:[
                 {
+                    sec:"文物",
                     title:"浏览",
                     icon:'mdi-open-in-app',
                     path:"/home/antique"
                 },
                 {
-                    title: "管理",
+                    sec:"文物",
+                    title: "审核",
                     icon:'mdi-file-find',
                     path:"/home/verification"
                 },
                 {
+                    sec:"文物",
                     title: "新建",
                     icon:'mdi-folder-plus',
                     path:"/home/newAntique"
                 },
                 {
+                    sec:"文物",
                     title: "导入",
                     icon:'mdi-application-import',
                     path:"/home/batchImport"
@@ -115,19 +121,24 @@
             ],
             adminTabs:[
                 {
+                    sec:"管理",
                     title:"用户管理",
                     icon:'mdi-account-box-multiple',
                     path:"/home/admin"
                 },
                 {
+                    sec:"管理",
                     title: "日志",
                     icon:'mdi-post',
                     path:"/home/log"
                 }
             ],
             searchDialog:false,
-            keyInput:''
+            keyInput:'',
+            crumbKey:0,
+            crumbItem:[]
         }),
+
         methods:{
             logout:function (
             ) {
@@ -139,7 +150,11 @@
                 this.$router.push('/search/'+this.keyInput)
             },
             ifRoleCanVerify,
-            ifRoleCanAdmin
+            ifRoleCanAdmin,
+        goToTab(tab){
+            this.$router.push(tab.path)
+            this.currentTab = tab
+        }
         },
         beforeMount() {
             if(!ifRoleCanVerify(this.$store.state.userObj.type)){
@@ -152,7 +167,60 @@
                     return value.path !== "/home/batchImport"
                 })
             }
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            const model = this
+            const crumbItem= [
+                {
+                    text: '主页',
+                    disabled: false,
+                    href: '#',
+                },
+                {
+                    text: [...this.adminTabs,...this.antiqueTabs].filter(function (value) {
+                        return value.path === model.$router.currentRoute.fullPath
+                    })[0].sec,
+                    disabled: false,
+                    href: '#',
+                },
+                {
+                    text: [...this.adminTabs,...this.antiqueTabs].filter(function (value) {
+                        return value.path === model.$router.currentRoute.fullPath
+                    })[0].title,
+                    disabled: true,
+                    href: '#',
+                },
+            ]
+            this.crumbItem.length = 0;
+            this.crumbItem.push(...crumbItem)
+        },
+        beforeUpdate:function () {
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            const model = this
+            const crumbItem= [
+                {
+                    text: '主页',
+                    disabled: false,
+                    href: '#',
+                },
+                {
+                    text: [...this.adminTabs,...this.antiqueTabs].filter(function (value) {
+                        return value.path === model.$router.currentRoute.fullPath
+                    })[0].sec,
+                    disabled: false,
+                    href: '#',
+                },
+                {
+                    text: [...this.adminTabs,...this.antiqueTabs].filter(function (value) {
+                        return value.path === model.$router.currentRoute.fullPath
+                    })[0].title,
+                    disabled: true,
+                    href: '#',
+                },
+            ]
+            this.crumbItem.length = 0;
+            this.crumbItem.push(...crumbItem)
         }
+
     }
 </script>
 
