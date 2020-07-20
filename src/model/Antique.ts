@@ -26,6 +26,6 @@ export interface AntiqueDto {
 export type AntiqueType = "PORCELAIN" | "JADE" | "PAINTING_CALLIGRAPHY" | "METAL" | "MISC";
 
 export interface WearAndTear {
-    content: string | null;
-    id: number | null;
+    content: string;
+    id: number;
 }

@@ -29,6 +29,11 @@ Vue.use(VueRouter)
         component: ()=>import('../views/home/Verification.vue')
       },
       {
+        path: 'wearAndTear',
+        name: 'WearAndTear',
+        component: ()=>import('../views/home/WearAndTear.vue')
+      },
+      {
         path: 'admin',
         name: 'Admin',
         component: ()=>import('../views/Admin.vue'),

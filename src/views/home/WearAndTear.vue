@@ -21,7 +21,7 @@
                         @loadend="loading = false"
                 ></v-text-field>
             </v-card-title>
-            <verification-table :key-word="search" :key="search"/>
+            <wear-and-tear-table :key-word="search" :key="search"/>
         </v-card>
     </div>
     </transition>
@@ -37,9 +37,10 @@
     import {ifRoleCanImport} from '../../accessControl';
     import AntiqueTable from "../../components/classic/AntiqueTable";
     import VerificationTable from "../../components/classic/VerificationTable";
+    import WearAndTearTable from "../../components/classic/WearAndTearTable";
     export default {
-        name: "Verification",
-        components: {VerificationTable},
+        name: "WearAndTear",
+        components: {WearAndTearTable},
         data:()=>({
             batchImportDialog:false,
             newAntiqueDialog:false,

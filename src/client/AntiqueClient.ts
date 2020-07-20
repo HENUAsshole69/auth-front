@@ -1,4 +1,4 @@
-import {Antique, AntiqueDto} from '@/model/Antique';
+import {Antique, AntiqueDto, WearAndTear} from '@/model/Antique';
 import AxiosInstance from "./AxiosInstance";
 import { Page } from '@/model/Page';
 
@@ -33,5 +33,8 @@ export class AntiqueClient{
     }
     static async searchAntique(keyWord: string,pageNo: number,pageLen: number): Promise<Page<AntiqueDto>>{
         return (await AxiosInstance.get("/antique/search/page/"+pageNo+'/'+pageLen+'?key='+keyWord)).data
+    }
+    static postAntiqueWearAndTear(id: number,wearAndTear: WearAndTear){
+        return AxiosInstance.post('/antique/wearAndTear/'+id,wearAndTear,{})
     }
 }

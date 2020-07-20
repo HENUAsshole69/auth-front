@@ -108,6 +108,12 @@
                 },
                 {
                     sec:"文物",
+                    title: "磨损信息",
+                    icon:'mdi-file-find',
+                    path:"/home/wearAndTear"
+                },
+                {
+                    sec:"文物",
                     title: "新建",
                     icon:'mdi-folder-plus',
                     path:"/home/newAntique"
