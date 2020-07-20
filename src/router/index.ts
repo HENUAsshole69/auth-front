@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import HelloWorld from "@/components/HelloWorld.vue";
 import store from '../store/index'
-import {ifRoleCanAdmin, ifRoleCanVerify} from "@/accessControl";
+import {ifRoleCanAdmin, ifRoleCanCred, ifRoleCanVerify, ifRoleCanWearAndTear} from "@/accessControl";
 Vue.use(VueRouter)
 
   const routes: Array<RouteConfig> = [
@@ -124,6 +124,24 @@ router.beforeEach((to, from, next) => {
 router.beforeEach((to, from, next) => {
   // @ts-ignore
   if((to.name === 'Admin' || to.name === 'Log') && !ifRoleCanAdmin(store.state.userObj.type)){
+    next(new Error())
+  }else{
+    next()
+  }
+})
+
+router.beforeEach((to, from, next) => {
+// @ts-ignore
+  if(to.name === 'WearAndTear' && !ifRoleCanWearAndTear(store.state.userObj.type)){
+    next(new Error())
+  }else{
+    next()
+  }
+})
+
+router.beforeEach((to, from, next) => {
+// @ts-ignore
+  if(to.name === 'Cred' && !ifRoleCanCred(store.state.userObj.type)){
     next(new Error())
   }else{
     next()
