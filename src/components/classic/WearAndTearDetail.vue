@@ -1,4 +1,7 @@
 <template>
+    <transition
+            enter-active-class="animated slideInRight"
+            leave-active-class="animated slideOutLeft">
     <v-card
             style="margin:1em"
     >
@@ -30,6 +33,7 @@
 
         </v-card-actions>
     </v-card>
+    </transition>
 </template>
 
 <script>
@@ -64,6 +68,7 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    $animationDuration: 0.5s; // specify animation duration. Default value: 1s
+    @import "~vue2-animate/src/sass/vue2-animate";
 </style>

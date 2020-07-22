@@ -17,11 +17,10 @@
                         label="搜索用户名或文物名称进行搜索"
                         single-line
                         hide-details
-                        @loadstart="loading = true"
-                        @loadend="loading = false"
                 ></v-text-field>
             </v-card-title>
-            <verification-table :key-word="search" :key="search"/>
+            <verification-table  @load="loading = true"
+                                 @loaded="loading = false"  :key-word="search" :key="search"/>
         </v-card>
     </div>
     </transition>

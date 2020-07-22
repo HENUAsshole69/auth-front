@@ -1,4 +1,7 @@
 <template>
+    <transition
+            enter-active-class="animated slideInRight"
+            leave-active-class="animated slideOutLeft">
     <v-container>
         <v-col>
             <v-expansion-panels popout>
@@ -39,6 +42,7 @@
 
         </v-col>
     </v-container>
+    </transition>
 </template>
 
 <script lang="ts">
@@ -94,6 +98,7 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    $animationDuration: 0.5s; // specify animation duration. Default value: 1s
+    @import "~vue2-animate/src/sass/vue2-animate";
 </style>

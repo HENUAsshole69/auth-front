@@ -63,7 +63,7 @@
         },
         methods:{
             onUpdate:async function(val) {
-                this.$emit('beforeLoad')
+                this.$emit('load')
                 if(/[^\s]+/.test(this.keyWord)) {
                     this.items.length = 0
                     const res = (await AntiqueClient.searchAntique(this.keyWord,val.page - 1, val.itemsPerPage))

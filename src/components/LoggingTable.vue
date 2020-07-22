@@ -42,10 +42,12 @@
         }),
         methods:{
             onUpdate:async function (val) {
+                this.$emit('load')
                 this.items.length = 0
                 const res =(await LoggingClient.getLogPage(val.page - 1,val.itemsPerPage))
                 this.totalLength = res.totalElements
                 this.items.push(...res.content)
+                this.$emit('loaded')
             },
             replaceArr(arr,n) {
                 arr.length = 0;

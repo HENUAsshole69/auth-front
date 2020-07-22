@@ -6,6 +6,7 @@
                 indeterminate
                 color="cyan"
                 v-if="loading"
+                style="z-index: 1"
         ></v-progress-linear>
         <v-card flat>
         <v-card-title>
@@ -17,11 +18,10 @@
                     label="搜索用户名或文物名称进行搜索"
                     single-line
                     hide-details
-                    @beforeLoad="loading = true"
-                    @loaded="loading = false"
             ></v-text-field>
         </v-card-title>
-        <antique-table :key-word="search" :key="search"/>
+        <antique-table  @load="loading = true"
+                        @loaded="loading = false"  :key-word="search" :key="search"/>
         </v-card>
     </div>
     </transition>

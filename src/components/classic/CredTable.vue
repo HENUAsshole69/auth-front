@@ -70,7 +70,7 @@
         },
         methods:{
             onUpdate:async function(val) {
-                this.$emit('loadStart')
+                this.$emit('load')
                 if(/[^\s]+/.test(this.keyWord)) {
                     this.items.length = 0
                     const res = (await AntiqueClient.searchAntique(this.keyWord,val.page - 1, val.itemsPerPage))
@@ -82,7 +82,7 @@
                     this.totalLength = res.totalElements
                     this.items.push(...res.content)
                 }
-                this.$emit('loadEnd')
+                this.$emit('loaded')
             },
             replaceArr(arr,n){
                 arr.length  = 0;

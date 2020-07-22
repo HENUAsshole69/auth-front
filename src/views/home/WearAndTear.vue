@@ -17,11 +17,11 @@
                         label="搜索用户名或文物名称进行搜索"
                         single-line
                         hide-details
-                        @loadstart="loading = true"
-                        @loadend="loading = false"
+
                 ></v-text-field>
             </v-card-title>
-            <wear-and-tear-table :key-word="search" :key="search"/>
+            <wear-and-tear-table @load="loading = true"
+                                 @loaded="loading = false" :key-word="search" :key="search"/>
         </v-card>
     </div>
     </transition>
