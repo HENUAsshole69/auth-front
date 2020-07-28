@@ -7,6 +7,9 @@
     >
         <h3>社会文物登记服务中心</h3>
 <v-spacer/>
+        <v-btn class="ma-2" tile text @click="setting = true">
+            <v-icon left>mdi-cog</v-icon> 用户设置
+        </v-btn>
         <v-btn outlined @click="logout">
             注销
             <v-icon right>mdi-exit-to-app</v-icon>
@@ -80,7 +83,7 @@
                 <v-col cols="auto" class="flex-grow-1"><router-view></router-view></v-col>
             </v-row>
         </v-container>
-
+        <user-setting-dialog :dialog="setting" @close="setting = false"/>
     </div>
     </transition>
 </template>
@@ -89,10 +92,12 @@
     import {ifRoleCanCred, ifRoleCanImport, ifRoleCanVerify, ifRoleCanWearAndTear} from '../accessControl';
     import {ifRoleCanAdmin} from '../accessControl';
     import NewAntiqueDialog from "../components/NewAntiqueDialog";
+    import UserSettingDialog from "../components/classic/UserSettingDialog";
     export default {
         name: "Home",
-        components: {},
+        components: {UserSettingDialog},
         data:()=>({
+            setting:false,
             antiqueTabs:[
                 {
                     sec:"文物",

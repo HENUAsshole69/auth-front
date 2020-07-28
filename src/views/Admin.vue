@@ -17,12 +17,10 @@
                         label="搜索用户名或文物名称进行搜索"
                         single-line
                         hide-details
-                        @loadstart="loading = true"
-                        @loadend="loading = false"
-
                 ></v-text-field>
             </v-card-title>
-       <user-management-table :keyWord="search" :key="search"/>
+       <user-management-table @load="loading = true"
+                              @loaded="loading = false" :keyWord="search" :key="search"/>
         </v-card>
     </div>
     </transition>
@@ -36,7 +34,8 @@
         components: { UserManagementTable},
         data:()=>({
             tab : null,
-            search:''
+            search:'',
+            loading:true
         })
     }
 </script>

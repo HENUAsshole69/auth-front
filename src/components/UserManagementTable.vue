@@ -8,6 +8,7 @@
                 'items-per-page-text': '每页显示项数:',
                 'items-per-page-all-text': '所有项'
             }"
+            no-data-text="无数据"
     >
         <template v-slot:item.verifiable="{ item }">
             <user-verifiable-select :verifiable="item.verifiable" @change="replaceArr(item.verifiable,$event)"/>

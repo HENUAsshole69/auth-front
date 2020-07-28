@@ -35,6 +35,7 @@
                                         <v-text-field v-model="user.realName" :rules="notEmptyRules"  v-if="!options.isLoggingIn" light="light" prepend-icon="mdi-account" label="真名"></v-text-field>
                                         <v-text-field v-model="user.cell" :rules="notEmptyRules"  v-if="!options.isLoggingIn" type="number" light="light" prepend-icon="mdi-phone" label="电话"></v-text-field>
                                         <v-text-field v-model="user.password" :rules="notEmptyRules"  light="light" prepend-icon="mdi-lock" label="密码" type="password"></v-text-field>
+                                        <v-text-field  v-if="!options.isLoggingIn" prepend-icon="mdi-lock"  type="password" label="确认密码" :rules="[v=> v !== undefined && v.length !== 0 || '密码确认不能为空',confirm]"  :hint="'确认新密码'"/>
                                         <v-btn v-if="options.isLoggingIn" @click.prevent="" block="block" type="submit"  :disabled="!loading && !valid" @click="login">登录</v-btn>
                                         <v-btn v-else block="block" type="submit" @click.prevent="(options.isLoggingIn = true)"  :disabled="!loading && !valid"  @click="register">注册</v-btn>
                                     </v-form>
@@ -91,6 +92,9 @@
             }
         },
         methods:{
+            confirm:function(v){
+                return v === this.user.password || '密码不一致'
+            },
             login:async function(){
                 try {
                     this.loading = true
