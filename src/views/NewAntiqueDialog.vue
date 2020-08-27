@@ -15,36 +15,59 @@
                 <v-icon @click="dialog = false">mdi-close</v-icon>
             </v-system-bar>
             <v-card-text>
-    <v-form v-model="valid">
-    <v-container fluid>
-        <v-row>
-            <v-col>
-                <v-text-field label="名称" :rules="nameRules" v-model="antique.name"  :hint="'输入文物名称'"/>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
-                <v-textarea label="描述" :rules="nameRules" v-model="antique.desp"  :hint="'输入文物描述'"/>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
-                <TypeSelector @change="antique.type = $event"/>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
-                <PicFileInput @change="antique.pic = $event"/>
-            </v-col>
-        </v-row>
+                <v-tabs-items v-model="tab">
+                    <v-tab-item>
+                        <v-form v-model="valid">
+                            <v-container fluid>
+                                <v-row>
+                                    <v-col>
+                                        <v-text-field :hint="'输入文物名称'" :rules="nameRules" label="名称"
+                                                      v-model="antique.name"/>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col>
+                                        <v-textarea :hint="'输入文物描述'" :rules="nameRules" label="描述"
+                                                    v-model="antique.desp"/>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col>
+                                        <TypeSelector @change="antique.type = $event"/>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col>
+                                        <PicFileInput @change="antique.pic = $event"/>
+                                    </v-col>
+                                </v-row>
 
-    </v-container>
-    </v-form>
+                            </v-container>
+                        </v-form>
+                    </v-tab-item>
+                    <v-tab-item>
+                        <v-container fluid style="margin: 0;padding: 0">
+                            <v-row no-gutters style="margin: 0;padding: 0">
+                                <v-col style="margin: 0;padding: 0">
+                                    <applier-type v-model="isIndividual"/>
+                                </v-col>
+                            </v-row>
+                            <v-row no-gutters style="margin: 0;padding: 0">
+                                <v-col style="margin: 0;padding: 0">
+                                    <v-form v-model="valid">
+                                        <individual-applier-info-input v-if="isIndividual" v-model="applier"/>
+                                        <enterprise-applier-info-input v-else v-model="applier"/>
+                                    </v-form>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-tab-item>
+                </v-tabs-items>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="dialog = false">关闭</v-btn>
-                <v-btn color="primary" text @click="onFinish" :disabled="!valid">提交</v-btn>
+                <v-btn :disabled="!valid" @click="onFinish" color="primary" text>{{tab === 1?'提交':'下一步'}}</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -57,41 +80,60 @@
     import TypeSelector from "../components/TypeSelector";
     import {AntiqueClient} from "../client/AntiqueClient";
     import PicFileInput from "../components/PicFileInput";
+    import EnterpriseApplierInfoInput from "../components/EnterpriseApplierInfoInput";
+    import ApplierType from "../components/ApplierType";
+    import IndividualApplierInfoInput from "../components/IndividualApplierInfoInput";
+
     export default {
-        components: {PicFileInput, TypeSelector},
-        data:()=>({
-            antique:{
-                name:'',
-                type:null,
-                desp:'',
-                pic:''
+        components: {EnterpriseApplierInfoInput, IndividualApplierInfoInput, ApplierType, PicFileInput, TypeSelector},
+        data: () => ({
+            antique: {
+                name: '',
+                type: null,
+                desp: '',
+                pic: ''
             },
-            valid:false,
-            nameRules:[v=> v.length !== 0 || '名称不能为空'],
-            despRules:[v=> v.length !== 0 || '描述不能为空'],
-            dialog:false
+            valid: false,
+            nameRules: [v => v.length !== 0 || '名称不能为空'],
+            despRules: [v => v.length !== 0 || '描述不能为空'],
+            dialog: false,
+            applier: {},
+            tab: 0,
+            isIndividual: true
         }),
         mounted() {
             this.dialog = true
         },
         watch:{
             dialog:function (n) {
-                if(n === false) this.$router.go(-1)
+                if (n === false) this.$router.go(-1)
             }
         },
         methods:{
-            onFinish: async function (){
+            onFinish: async function () {
                 console.log(this.antique)
-                try {
-                    const result = await AntiqueClient.postAntique(this.antique)
-                }catch (e) {
-                    console.log(e)
-                }finally {
-                    this.$router.go(-1)
+                if (this.tab === 0) {
+                    this.tab++
+                    this.valid = false
+                } else {
+                    try {
+                        const result = await AntiqueClient.postAntique(this.antique)
+                        if (this.isIndividual) {
+                            this.applier.type = 'INDIVIDUAL'
+                            await AntiqueClient.postIndividualApplierInfo(result.id, this.applier)
+                        } else {
+                            this.applier.type = 'ENTERPRISE'
+                            await AntiqueClient.postEnterpriseApplierInfo(result.id, this.applier)
+                        }
+                    } catch (e) {
+                        console.log(e)
+                    } finally {
+                        this.$router.go(-1);
+                    }
                 }
             }
         },
-        name: "NewAntique"
+        name: "NewAntiqueDialog"
     }
 </script>
 

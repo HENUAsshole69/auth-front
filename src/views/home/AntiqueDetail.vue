@@ -18,11 +18,10 @@
         <v-container>
             <v-row>
                 <v-col cols="6">
-                    <viewer :images="[picSrc]">
-                    <img
-                            :src="picSrc"
-                    >
-                    </viewer>
+                    <v-img
+                            :src="picSrc" aspect-ratio="1.7778"
+                    />
+
                 </v-col>
                 <v-col cols="6">
                     <v-list
@@ -81,6 +80,7 @@
     import {VerClient} from "@/client/VerClient";
     import {VerificationProcessDto} from "@/model/Verification";
     import VerificationStepper from "@/components/classic/VerificationStepper.vue";
+
     @Component({
         components: {VerificationStepper, VerificationDisplay}
     })

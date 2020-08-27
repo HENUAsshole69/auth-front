@@ -1,5 +1,6 @@
-import { VerificationProcess } from "./Verification";
-import { User } from './User';
+import {VerificationProcess} from "./Verification";
+import {User} from './User';
+import {ApplierInfo} from "@/model/ApplierInfo";
 
 export interface Antique {
     id: number | null;
@@ -17,10 +18,11 @@ export interface AntiqueDto {
     id: number;
     name: string;
     type: AntiqueType;
-    invalid: boolean|null;
+    invalid: boolean | null;
     userName: string;
     verificationProcesses: number;
-    pic:Blob|null;
+    owner: ApplierInfo;
+    pic: Blob | null;
 }
 
 export type AntiqueType = "PORCELAIN" | "JADE" | "PAINTING_CALLIGRAPHY" | "METAL" | "MISC";

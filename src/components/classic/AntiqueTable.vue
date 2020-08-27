@@ -31,6 +31,10 @@
             <v-btn icon @click="$router.push('/antiqueDetail/'+item.id)">
                 <v-icon>mdi-dots-horizontal-circle-outline</v-icon>
             </v-btn>
+            <v-btn @click="dialog = true" icon>
+                <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
+            <applier-info-edit-dialog :id="item.id" v-model="dialog"/>
         </template>
     </v-data-table>
 </template>
@@ -39,26 +43,28 @@
     import {AntiqueClient} from "../../client/AntiqueClient";
     import QRDisplay from "../QRDisplay";
     import CertDownloader from "./CertDownloader";
+    import ApplierInfoEditDialog from "../ApplierInfoEditDialog";
 
     export default {
         name: "AntiqueTable",
-        components: {CertDownloader, QRDisplay},
-        props:{
-            keyWord:String
+        components: {ApplierInfoEditDialog, CertDownloader, QRDisplay},
+        props: {
+            keyWord: String
         },
-        data:()=>({
-            headers:[{
+        data: () => ({
+            headers: [{
                 text: '名称',
                 align: 'start',
                 sortable: true,
                 value: 'name',
             },
-                { text: '序号', value: 'id' },
-                { text: '用户', value: 'user' },
-                { text: '描述', value: 'desp' },
-                { text: '详情', value: 'details',sortable: false }],
-            items:[],
-            totalLength:0
+                {text: '序号', value: 'id'},
+                {text: '用户', value: 'user'},
+                {text: '描述', value: 'desp'},
+                {text: '详情', value: 'details', sortable: false}],
+            items: [],
+            totalLength: 0,
+            dialog: false
         }),
         watch:{
         },
