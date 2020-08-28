@@ -18,15 +18,38 @@
             <v-spacer></v-spacer>
                         <v-form v-model="valid">
                         <v-data-table
+                                dense
                                 :headers="headers"
                                 :items="antiques"
+                                show-expand
                                 style="height: 100%"
                                 :footer-props="{
                 'items-per-page-text': '每页显示项数:',
                 'items-per-page-all-text': '所有项'
             }"
                                 no-data-text="请添加导入条目"
+                                single-expand
                         >
+                            <template v-slot:expanded-item="{item,headers}">
+                                <td :colspan="headers.length">
+                                    <v-container fluid style="margin: 0;padding: 0">
+                                        <v-row no-gutters style="margin: 0;padding: 0">
+                                            <v-col style="margin: 0;padding: 0">
+                                                <applier-type v-model="item.isIndividual"/>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row no-gutters style="margin: 0;padding: 0">
+                                            <v-col style="margin: 0;padding: 0">
+                                                <v-form v-model="valid">
+                                                    <individual-applier-info-input v-if="item.isIndividual"
+                                                                                   v-model="item.applier"/>
+                                                    <enterprise-applier-info-input v-else v-model="item.applier"/>
+                                                </v-form>
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                </td>
+                            </template>
                             <template v-slot:footer.page-text="{pageStart,
   pageStop,
   itemsLength}">
@@ -51,10 +74,10 @@
                                 </v-toolbar>
                             </template>
                             <template v-slot:item.name="{ item }">
-                                <v-text-field v-model="item.name" :rules="nameRules"/>
+                                <v-text-field :rules="nameRules" dense v-model="item.name"/>
                             </template>
                             <template v-slot:item.desp="{ item }">
-                                <v-text-field v-model="item.desp" :rules="despRules"/>
+                                <v-text-field :rules="despRules" dense v-model="item.desp"/>
                             </template>
                             <template v-slot:item.type="{ item }">
                                 <type-selector @change="item.type = $event"/>
@@ -80,9 +103,13 @@
     import TypeSelector from "./TypeSelector";
     import PicFileInput from "./PicFileInput";
     import {AntiqueClient} from "../client/AntiqueClient";
+    import ApplierType from "./ApplierType";
+    import IndividualApplierInfoInput from "./IndividualApplierInfoInput";
+    import EnterpriseApplierInfoInput from "./EnterpriseApplierInfoInput";
+
     export default {
-        components: {PicFileInput, TypeSelector},
-        data:()=>({
+        components: {EnterpriseApplierInfoInput, IndividualApplierInfoInput, ApplierType, PicFileInput, TypeSelector},
+        data: () => ({
             headers: [
                 {
                     text: '名称',
@@ -90,10 +117,11 @@
                     sortable: false,
                     value: 'name',
                 },
-                { text: '描述', value: 'desp' },
-                { text: '类别', value: 'type' },
+                {text: '描述', value: 'desp'},
+                {text: '类别', value: 'type'},
                 { text: '图片', value: 'pic' },
                 { text: '删除', value: 'actions', sortable: false },
+                {text: '申请人信息', value: 'data-table-expand'}
             ],
             antiques: [],
             nameRules:[v=> v.length !== 0 || '名称不能为空'],
@@ -111,19 +139,28 @@
             },
             addItem(){
                 this.antiques.push({
-                    name:'',
-                    type:'',
-                    desp:'',
-                    pic:''
+                    name: '',
+                    type: '',
+                    desp: '',
+                    pic: '',
+                    isIndividual: true,
+                    applier: {}
                 })
             },
             async upload() {
                 this.uploading = true
                 let finished = 0;
-                for(const antique of this.antiques){
-                    await AntiqueClient.postAntique(antique)
+                for(const antique of this.antiques) {
+                    const res = await AntiqueClient.postAntique(antique)
+                    if (antique.isIndividual) {
+                        antique.applier.type = 'INDIVIDUAL'
+                        await AntiqueClient.postIndividualApplierInfo(res.id, antique.applier)
+                    } else {
+                        antique.applier.type = 'ENTERPRISE'
+                        await AntiqueClient.postEnterpriseApplierInfo(res.id, antique.applier)
+                    }
                     finished++;
-                    this.uploadPercentage = (finished / this.antiques.length)*100
+                    this.uploadPercentage = (finished / this.antiques.length) * 100
                 }
                 this.$router.go(-1)
             }

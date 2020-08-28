@@ -1,5 +1,6 @@
 <template>
     <v-file-input
+            dense
             accept="image/png, image/jpeg, image/bmp"
             placeholder="选择图片"
             prepend-icon="mdi-camera"

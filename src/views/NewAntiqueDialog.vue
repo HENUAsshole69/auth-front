@@ -83,9 +83,12 @@
     import EnterpriseApplierInfoInput from "../components/EnterpriseApplierInfoInput";
     import ApplierType from "../components/ApplierType";
     import IndividualApplierInfoInput from "../components/IndividualApplierInfoInput";
+    import FormFileUploader from "../components/classic/FormFileUploader";
 
     export default {
-        components: {EnterpriseApplierInfoInput, IndividualApplierInfoInput, ApplierType, PicFileInput, TypeSelector},
+        components: {
+            EnterpriseApplierInfoInput, IndividualApplierInfoInput, ApplierType, PicFileInput, TypeSelector
+        },
         data: () => ({
             antique: {
                 name: '',

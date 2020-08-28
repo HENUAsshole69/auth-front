@@ -1,5 +1,6 @@
 <template>
     <v-select
+            dense
             v-bind:items="items"
             v-model="value"
             label="文物类型"
