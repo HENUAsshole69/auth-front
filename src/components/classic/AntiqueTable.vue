@@ -49,7 +49,8 @@
         name: "AntiqueTable",
         components: {ApplierInfoEditDialog, CertDownloader, QRDisplay},
         props: {
-            keyWord: String
+            keyWord: String,
+            date: Array
         },
         data: () => ({
             headers: [{
@@ -73,12 +74,14 @@
                 this.$emit('load')
                 if(/[^\s]+/.test(this.keyWord)) {
                     this.items.length = 0
-                    const res = (await AntiqueClient.searchAntique(this.keyWord,val.page - 1, val.itemsPerPage))
+                    const res = (await AntiqueClient.searchAntique(this.keyWord, val.page - 1, val.itemsPerPage, this.date[0], this.date[1]))
+                    console.log(res)
                     this.totalLength = res.totalElements
                     this.items.push(...res.content)
-                }else{
+                }else {
                     this.items.length = 0
-                    const res = (await AntiqueClient.getAntique(val.page - 1, val.itemsPerPage))
+                    const res = (await AntiqueClient.getAntique(val.page - 1, val.itemsPerPage, this.date[0], this.date[1]))
+                    console.log(res)
                     this.totalLength = res.totalElements
                     this.items.push(...res.content)
                 }

@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
-import HelloWorld from "@/components/HelloWorld.vue";
+import VueRouter, {RouteConfig} from 'vue-router'
 import store from '../store/index'
 import {ifRoleCanAdmin, ifRoleCanCred, ifRoleCanVerify, ifRoleCanWearAndTear} from "@/accessControl";
+
 Vue.use(VueRouter)
 
   const routes: Array<RouteConfig> = [
@@ -21,22 +21,22 @@ Vue.use(VueRouter)
       {
         path: 'antique',
         name: 'Antique',
-        component: ()=>import('../views/home/Antique.vue')
+        component: () => import('../views/home/FramedAntique.vue')
       },
       {
         path: 'verification',
         name: 'Verification',
-        component: ()=>import('../views/home/Verification.vue')
+        component: () => import('../views/home/FramedVerification.vue')
       },
       {
         path: 'wearAndTear',
         name: 'WearAndTear',
-        component: ()=>import('../views/home/WearAndTear.vue')
+        component: () => import('../views/home/FramedWearAndTear.vue')
       },
       {
         path: 'cred',
         name: 'Cred',
-        component: ()=>import('../views/home/Cred.vue')
+        component: () => import('../views/home/FramedCred.vue')
       },
       {
         path: 'admin',

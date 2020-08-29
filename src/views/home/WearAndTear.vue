@@ -13,15 +13,26 @@
                 <v-spacer></v-spacer>
                 <v-text-field
                         v-model="search"
-                        append-icon="mdi-magnify"
                         label="搜索用户名或文物名称进行搜索"
                         single-line
                         hide-details
 
-                ></v-text-field>
+                >
+                    <template v-slot:prepend-inner>
+                        <date-range-picker v-model="date"/>
+                    </template>
+                    <template v-slot:append>
+                        <v-btn icon>
+                            <v-icon>
+                                mdi-magnify
+                            </v-icon>
+                        </v-btn>
+                    </template>
+                </v-text-field>
             </v-card-title>
             <wear-and-tear-table @load="loading = true"
-                                 @loaded="loading = false" :key-word="search" :key="search"/>
+                                 :date="date" :key="search+date.toString()" :key-word="search"
+                                 @loaded="loading = false"/>
         </v-card>
     </div>
     </transition>
@@ -38,20 +49,22 @@
     import AntiqueTable from "../../components/classic/AntiqueTable";
     import VerificationTable from "../../components/classic/VerificationTable";
     import WearAndTearTable from "../../components/classic/WearAndTearTable";
+    import DateRangePicker from "../../components/classic/DateRangePicker";
+
     export default {
         name: "WearAndTear",
-        components: {WearAndTearTable},
-        data:()=>({
-            batchImportDialog:false,
-            newAntiqueDialog:false,
-            searchTest:false,
-            loading:false,
-            search:'',
-            cards: [
-            ],
-            busy:false,
-            pageNo:0,
+        components: {WearAndTearTable, DateRangePicker},
+        data: () => ({
+            batchImportDialog: false,
+            newAntiqueDialog: false,
+            searchTest: false,
+            loading: false,
+            search: '',
+            cards: [],
+            busy: false,
+            pageNo: 0,
             pageLen:10,
+            date: ['1970-01-01', new Date().toISOString().substr(0, 10)]
         }),
         directives:{
             infiniteScroll

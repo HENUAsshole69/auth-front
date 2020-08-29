@@ -14,7 +14,7 @@
                 <v-text-field
                         v-model="search"
                         append-icon="mdi-magnify"
-                        label="搜索用户名或文物名称进行搜索"
+                        label="搜索用户名进行搜索"
                         single-line
                         hide-details
                 ></v-text-field>

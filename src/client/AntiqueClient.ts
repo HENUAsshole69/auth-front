@@ -20,12 +20,19 @@ export class AntiqueClient {
         return AxiosInstance.post('/antique/cert/' + id, certB64, {})
     }
 
-    static async getAntique(pageNo: number, pageLen: number): Promise<Page<AntiqueDto>> {
-        return (await AxiosInstance.get('/antique/page/' + pageNo + '/' + pageLen)).data
+    static async getAntique(pageNo: number, pageLen: number, from: string | undefined, to: string | undefined): Promise<Page<AntiqueDto>> {
+        const params: { [key: string]: string } = {}
+        if (from !== undefined) {
+            params['from'] = from
+        }
+        if (to !== undefined) {
+            params['to'] = to
+        }
+        return (await AxiosInstance.get('/antique/page/' + pageNo + '/' + pageLen, {params})).data
     }
 
     static async getAntiquePic(id: number): Promise<string> {
-        return AxiosInstance.get('/antique/pic/'+id,{ responseType: 'arraybuffer' }).then((response) => {
+        return AxiosInstance.get('/antique/pic/' + id, {responseType: 'arraybuffer'}).then((response) => {
             const image = btoa(
                 new Uint8Array(response.data)
                     .reduce((data, byte) => data + String.fromCharCode(byte), '')
@@ -34,17 +41,26 @@ export class AntiqueClient {
         });
     }
 
-    static async getAntiqueCert(id: number){
-        return AxiosInstance.get('/antique/cert/'+id,{ responseType: 'text' })
+    static async getAntiqueCert(id: number) {
+        return AxiosInstance.get('/antique/cert/' + id, {responseType: 'text'})
     }
 
-    static async getAntiqueDto(id: number): Promise<AntiqueDto>{
-        return (await AxiosInstance.get('/antique/'+id)).data
+    static async getAntiqueDto(id: number): Promise<AntiqueDto> {
+        return (await AxiosInstance.get('/antique/' + id)).data
     }
-    static async searchAntique(keyWord: string,pageNo: number,pageLen: number): Promise<Page<AntiqueDto>>{
-        return (await AxiosInstance.get("/antique/search/page/"+pageNo+'/'+pageLen+'?key='+keyWord)).data
+
+    static async searchAntique(keyWord: string, pageNo: number, pageLen: number, from: string | undefined, to: string | undefined): Promise<Page<AntiqueDto>> {
+        const params: { [key: string]: string } = {}
+        if (from !== undefined) {
+            params['from'] = from
+        }
+        if (to !== undefined) {
+            params['to'] = to
+        }
+        return (await AxiosInstance.get("/antique/search/page/" + pageNo + '/' + pageLen + '?key=' + keyWord, {params})).data
     }
-    static postAntiqueWearAndTear(id: number,wearAndTear: WearAndTear){
-        return AxiosInstance.post('/antique/wearAndTear/'+id,wearAndTear,{})
+
+    static postAntiqueWearAndTear(id: number, wearAndTear: WearAndTear) {
+        return AxiosInstance.post('/antique/wearAndTear/' + id, wearAndTear, {})
     }
 }
