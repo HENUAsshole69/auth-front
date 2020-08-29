@@ -15,6 +15,7 @@
                     <v-spacer></v-spacer>
 
                     <v-text-field
+                            dense
                             hide-details
                             label="搜索用户名或文物名称进行搜索"
                             single-line
@@ -24,7 +25,7 @@
                             <date-range-picker v-model="date"/>
                         </template>
                         <template v-slot:append>
-                            <v-btn icon>
+                            <v-btn icon small>
                                 <v-icon>
                                     mdi-magnify
                                 </v-icon>

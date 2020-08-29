@@ -21,13 +21,13 @@
                             <v-container fluid>
                                 <v-row>
                                     <v-col>
-                                        <v-text-field :hint="'输入文物名称'" :rules="nameRules" label="名称"
+                                        <v-text-field :hint="'输入文物名称'" :rules="nameRules" dense label="名称"
                                                       v-model="antique.name"/>
                                     </v-col>
                                 </v-row>
                                 <v-row>
                                     <v-col>
-                                        <v-textarea :hint="'输入文物描述'" :rules="nameRules" label="描述"
+                                        <v-textarea :hint="'输入文物描述'" :rules="nameRules" dense label="描述"
                                                     v-model="antique.desp"/>
                                     </v-col>
                                 </v-row>

@@ -17,14 +17,18 @@
     </v-toolbar>
         <v-container fluid style="padding: 0;height: 100%">
             <v-row no-gutters dense>
-                    <v-col  cols="auto" class="flex-grow-1"><v-breadcrumbs :items="crumbItem" :key="crumbKey"></v-breadcrumbs><v-divider/></v-col>
+                    <v-col class="flex-grow-1" cols="auto">
+                        <v-breadcrumbs :items="crumbItem" :key="crumbKey"
+                                       style="padding-top: 0.5em;padding-bottom: 0.5em"></v-breadcrumbs>
+                        <v-divider/>
+                    </v-col>
             </v-row>
             <v-row style="height: 100%" no-gutters class="flex-nowrap">
                 <v-col cols="auto" style="height: 100%">
                     <div style="width: 256px;height: 100%;">
                         <v-navigation-drawer permanent
                                              left>
-                            <v-list>
+                            <v-list dense>
                                 <v-list-item>
                                     <v-list-item-icon>
                                         <v-icon>mdi-home</v-icon>

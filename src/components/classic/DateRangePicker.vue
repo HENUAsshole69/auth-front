@@ -8,11 +8,11 @@
             v-model="menu"
     >
         <template v-slot:activator="{ on, attrs }">
-            <v-btn
-                    icon
-                    style="margin: 0;padding: 0"
-                    v-bind="attrs"
-                    v-on="on"
+            <v-btn small
+                   icon
+                   style="margin: 0;padding: 0"
+                   v-bind="attrs"
+                   v-on="on"
             >
                 <v-icon>mdi-calendar</v-icon>
             </v-btn>

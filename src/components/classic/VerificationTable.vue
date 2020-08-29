@@ -11,6 +11,7 @@
                 'items-per-page-all-text': '所有项'
             }"
             no-data-text="无数据"
+            dense
     >
 
         <template v-slot:footer.page-text="{pageStart,
