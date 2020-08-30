@@ -23,6 +23,7 @@
                                 :items="antiques"
                                 show-expand
                                 style="height: 100%"
+                                disable-sort
                                 :footer-props="{
                 'items-per-page-text': '每页显示项数:',
                 'items-per-page-all-text': '所有项'

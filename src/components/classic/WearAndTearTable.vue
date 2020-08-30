@@ -12,6 +12,7 @@
             }"
             no-data-text="无数据"
             dense
+            disable-sort
     >
 
         <template v-slot:footer.page-text="{pageStart,
