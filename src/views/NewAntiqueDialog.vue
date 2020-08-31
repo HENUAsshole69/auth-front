@@ -83,7 +83,7 @@
     import EnterpriseApplierInfoInput from "../components/EnterpriseApplierInfoInput";
     import ApplierType from "../components/ApplierType";
     import IndividualApplierInfoInput from "../components/IndividualApplierInfoInput";
-    import FormFileUploader from "../components/classic/FormFileUploader";
+    import FormFileUploader from "../components/classic/Inventory/FormFileUploader";
 
     export default {
         components: {

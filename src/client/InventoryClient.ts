@@ -14,10 +14,10 @@ export class InventoryClient {
         return (await AxiosInstance.get('/antique/' + id + '/inventory/file', {})).data
     }
 
-    static async uploadFileForAntique(file: File, id: number, fileName: string) {
+    static async uploadFileForAntique(file: File, id: number) {
         const formData = new FormData();
         formData.append("file", file);
-        await AxiosInstance.post('/antique/' + id + '/inventory/file/' + fileName, formData, {
+        await AxiosInstance.post('/antique/' + id + '/inventory/file/' + file.name, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

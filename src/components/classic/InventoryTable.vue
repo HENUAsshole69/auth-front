@@ -35,9 +35,8 @@
         </template>
 
         <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length">
-                <verification-stepper :antique="item" :key="rerenderKey" @error="rerenderKey++"
-                                      @success="rerenderKey++"/>
+            <td :colspan="headers.length" style="padding: 0;margin: 0">
+                <inventory-input :key="rerenderKey" @update="rerenderKey++" v-model="item.id"/>
             </td>
         </template>
     </v-data-table>
@@ -47,10 +46,11 @@
     import {AntiqueClient} from "../../client/AntiqueClient";
     import VerificationDetail from "./VerificationDetail";
     import VerificationStepper from "./VerificationStepper";
+    import InventoryInput from "./Inventory/InventoryInput";
 
     export default {
         name: "InventoryTable",
-        components: {VerificationStepper},
+        components: {InventoryInput},
         props: {
             keyWord: String,
             date: Array
