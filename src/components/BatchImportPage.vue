@@ -32,23 +32,25 @@
                                 single-expand
                         >
                             <template v-slot:expanded-item="{item,headers}">
-                                <td :colspan="headers.length">
-                                    <v-container fluid style="margin: 0;padding: 0">
-                                        <v-row no-gutters style="margin: 0;padding: 0">
-                                            <v-col style="margin: 0;padding: 0">
-                                                <applier-type v-model="item.isIndividual"/>
-                                            </v-col>
-                                        </v-row>
-                                        <v-row no-gutters style="margin: 0;padding: 0">
-                                            <v-col style="margin: 0;padding: 0">
-                                                <v-form v-model="valid">
-                                                    <individual-applier-info-input v-if="item.isIndividual"
-                                                                                   v-model="item.applier"/>
-                                                    <enterprise-applier-info-input v-else v-model="item.applier"/>
-                                                </v-form>
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
+                                <td :colspan="headers.length" style="padding: 0">
+                                    <v-card elevation="0" tile>
+                                        <v-container fluid style="margin: 0;padding: 0">
+                                            <v-row no-gutters style="margin: 0;padding: 0">
+                                                <v-col style="margin: 0;padding: 0">
+                                                    <applier-type v-model="item.isIndividual"/>
+                                                </v-col>
+                                            </v-row>
+                                            <v-row no-gutters style="margin: 0;padding: 0">
+                                                <v-col style="margin: 0;padding: 0">
+                                                    <v-form v-model="valid">
+                                                        <individual-applier-info-input v-if="item.isIndividual"
+                                                                                       v-model="item.applier"/>
+                                                        <enterprise-applier-info-input v-else v-model="item.applier"/>
+                                                    </v-form>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                    </v-card>
                                 </td>
                             </template>
                             <template v-slot:footer.page-text="{pageStart,

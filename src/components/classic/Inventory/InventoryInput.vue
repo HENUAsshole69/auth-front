@@ -1,23 +1,25 @@
 <template>
     <v-card elevation="0" tile>
-        <v-form v-model="valid">
+
             <v-container fluid style="margin: 0;padding: 1em;z-index: -1">
                 <v-row dense no-gutters>
-                    <v-col>
-                        <v-row dense no-gutters>
-                            <v-col>
-                                <v-text-field :rules="nonEmptyRules" dense label="入库状态"
-                                              v-model="inventory.requisitionStatus"/>
-                            </v-col>
-                        </v-row>
-                        <v-row dense no-gutters>
-                            <v-col>
-                                <v-text-field
-                                        :value="inventory.requisitionTime === ''?'不存在':new Date(inventory.requisitionTime).toLocaleDateString('zh-cn')"
-                                        dense label="入库时间" readonly/>
-                            </v-col>
-                        </v-row>
-                    </v-col>
+                    <v-form v-model="valid">
+                        <v-col>
+                            <v-row dense no-gutters>
+                                <v-col>
+                                    <v-text-field :rules="nonEmptyRules" dense label="入库状态"
+                                                  v-model="inventory.requisitionStatus"/>
+                                </v-col>
+                            </v-row>
+                            <v-row dense no-gutters>
+                                <v-col>
+                                    <v-text-field
+                                            :value="inventory.requisitionTime === ''?'不存在':new Date(inventory.requisitionTime).toLocaleDateString('zh-cn')"
+                                            dense label="入库时间" readonly/>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                    </v-form>
                     <v-col>
                         <v-row>
                             <v-col>
@@ -45,7 +47,7 @@
                     </v-container>
                 </v-overlay>
             </v-container>
-        </v-form>
+
         <v-card-actions>
             <v-btn
                     :disabled="!valid"

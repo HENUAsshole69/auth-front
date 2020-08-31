@@ -1,12 +1,20 @@
 <template>
-    <v-file-input
-            :rules="picRules"
-            @change="onChange($event)"
-            hint="请选择文件"
-            label="新文件"
-            placeholder="添加新文件"
-            prepend-icon="mdi-file"
-    ></v-file-input>
+    <div>
+        <v-file-input
+                :rules="picRules"
+                @change="onChange($event)"
+                hint="请选择文件"
+                label="新文件"
+                :loading="loading"
+                placeholder="添加新文件"
+                prepend-icon="mdi-file"
+                dense
+        >
+            <template v-slot:progress>
+                <v-progress-linear :value="progress" absolute></v-progress-linear>
+            </template>
+        </v-file-input>
+    </div>
 </template>
 
 <script>
@@ -18,12 +26,20 @@
             id: Number
         },
         data: () => ({
-            picRules: [v => v !== undefined || '文件不可不选']
+            picRules: [v => v !== undefined || '文件不可不选'],
+            progress: 0,
+            loading: false
         }),
         methods: {
             async onChange(file) {
-                console.log(await InventoryClient.uploadFileForAntique(file, this.id))
+                // eslint-disable-next-line @typescript-eslint/no-this-alias
+                const model = this
+                this.loading = true
+                console.log(await InventoryClient.uploadFileForAntique(file, this.id, function (progressEvent) {
+                    model.progress = (progressEvent.loaded / progressEvent.total) * 100
+                }))
                 this.$emit('update')
+                this.loading = false
             }
         }
     }

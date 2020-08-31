@@ -14,13 +14,18 @@ export class InventoryClient {
         return (await AxiosInstance.get('/antique/' + id + '/inventory/file', {})).data
     }
 
-    static async uploadFileForAntique(file: File, id: number) {
+    static async uploadFileForAntique(file: File, id: number, callback: (progressEvent: ProgressEvent) => undefined) {
         const formData = new FormData();
         formData.append("file", file);
         await AxiosInstance.post('/antique/' + id + '/inventory/file/' + file.name, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
-            }
+            },
+            onUploadProgress: callback
         })
+    }
+
+    static async delInventoryFile(antiqueId: string, fileId: string) {
+        return (await AxiosInstance.delete('/antique/' + antiqueId + '/inventory/file/' + fileId, {}))
     }
 }
