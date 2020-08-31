@@ -29,26 +29,31 @@ Vue.use(VueRouter)
         component: () => import('../views/home/FramedVerification.vue')
       },
       {
-        path: 'wearAndTear',
-        name: 'WearAndTear',
-        component: () => import('../views/home/FramedWearAndTear.vue')
+          path: 'wearAndTear',
+          name: 'WearAndTear',
+          component: () => import('../views/home/FramedWearAndTear.vue')
       },
-      {
-        path: 'cred',
-        name: 'Cred',
-        component: () => import('../views/home/FramedCred.vue')
-      },
-      {
-        path: 'admin',
-        name: 'Admin',
-        component: ()=>import('../views/Admin.vue'),
-      },
-      {
-        path: 'log',
-        name: 'Log',
-        component: ()=>import('../views/Log.vue'),
-      },
-      {
+        {
+            path: 'cred',
+            name: 'Cred',
+            component: () => import('../views/home/FramedCred.vue')
+        },
+        {
+            path: 'inventory',
+            name: 'Inventory',
+            component: () => import('../views/home/Inventory.vue')
+        },
+        {
+            path: 'admin',
+            name: 'Admin',
+            component: () => import('../views/Admin.vue'),
+        },
+        {
+            path: 'log',
+            name: 'Log',
+            component: () => import('../views/Log.vue'),
+        },
+        {
         path: 'newAntique',
         name: 'NewAntique',
         component: ()=>import('../views/NewAntiqueDialog.vue'),

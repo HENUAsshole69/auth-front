@@ -1,5 +1,4 @@
 import {UserType} from "@/model/User";
-import {StageSelectNameMap} from "@/model/Verification";
 
 export function ifRoleCanVerify(role: UserType): boolean {
     return role === "ARCH_DEPT" || role === "JUDICIAL_DEPT" || role === "ADMIN";
@@ -18,4 +17,8 @@ export function ifRoleCanWearAndTear(role: UserType): boolean {
 
 export function ifRoleCanCred(role: UserType): boolean {
     return role === "ARCH_DEPT" || role === "ADMIN";
+}
+
+export function ifRoleCanInventory(role: UserType): boolean {
+    return true
 }

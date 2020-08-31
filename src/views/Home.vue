@@ -93,38 +93,51 @@
 </template>
 
 <script>
-    import {ifRoleCanCred, ifRoleCanImport, ifRoleCanVerify, ifRoleCanWearAndTear} from '../accessControl';
+    import {
+        ifRoleCanCred,
+        ifRoleCanImport,
+        ifRoleCanInventory,
+        ifRoleCanVerify,
+        ifRoleCanWearAndTear
+    } from '../accessControl';
     import {ifRoleCanAdmin} from '../accessControl';
     import NewAntiqueDialog from "../components/NewAntiqueDialog";
     import UserSettingDialog from "../components/classic/UserSettingDialog";
+
     export default {
         name: "Home",
         components: {UserSettingDialog},
-        data:()=>({
-            setting:false,
-            antiqueTabs:[
+        data: () => ({
+            setting: false,
+            antiqueTabs: [
                 {
                     sec:"文物",
-                    title:"浏览",
-                    icon:'mdi-open-in-app',
-                    path:"/home/antique"
+                    title: "浏览",
+                    icon: 'mdi-open-in-app',
+                    path: "/home/antique"
                 },
                 {
-                    sec:"文物",
+                    sec: "文物",
                     title: "审核",
-                    icon:'mdi-file-find',
-                    path:"/home/verification"
+                    icon: 'mdi-file-find',
+                    path: "/home/verification"
                 },
                 {
-                    sec:"文物",
+                    sec: "文物",
+                    title: "库存",
+                    icon: 'mdi-bank-transfer',
+                    path: "/home/inventory"
+                },
+                {
+                    sec: "文物",
                     title: "磨损信息",
-                    icon:'mdi-image-broken-variant',
-                    path:"/home/wearAndTear"
+                    icon: 'mdi-image-broken-variant',
+                    path: "/home/wearAndTear"
                 },
                 {
-                    sec:"文物",
+                    sec: "文物",
                     title: "证书信息",
-                    icon:'mdi-certificate',
+                    icon: 'mdi-certificate',
                     path:"/home/cred"
                 },
                 {
@@ -188,26 +201,31 @@
                     return value.path !== "/home/batchImport"
                 })
             }
-            if(!ifRoleCanWearAndTear(this.$store.state.userObj.type)){
+            if (!ifRoleCanWearAndTear(this.$store.state.userObj.type)) {
                 this.antiqueTabs = this.antiqueTabs.filter(function (value) {
                     return value.path !== "/home/wearAndTear"
                 })
             }
-            if(!ifRoleCanCred(this.$store.state.userObj.type)){
+            if (!ifRoleCanCred(this.$store.state.userObj.type)) {
                 this.antiqueTabs = this.antiqueTabs.filter(function (value) {
                     return value.path !== "/home/cred"
                 })
             }
+            if (!ifRoleCanInventory(this.$store.state.userObj.type)) {
+                this.antiqueTabs = this.antiqueTabs.filter(function (value) {
+                    return value.path !== "/home/inventory"
+                })
+            }
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const model = this
-            const crumbItem= [
+            const crumbItem = [
                 {
                     text: '主页',
                     disabled: false,
                     href: '#',
                 },
                 {
-                    text: [...this.adminTabs,...this.antiqueTabs].filter(function (value) {
+                    text: [...this.adminTabs, ...this.antiqueTabs].filter(function (value) {
                         return value.path === model.$router.currentRoute.fullPath
                     })[0].sec,
                     disabled: false,
