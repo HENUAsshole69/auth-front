@@ -2,7 +2,6 @@
     <v-file-input
             :rules="picRules"
             @change="onChange($event)"
-            accept="image/png, image/jpeg, image/bmp"
             hint="请选择文件"
             label="新文件"
             placeholder="添加新文件"
