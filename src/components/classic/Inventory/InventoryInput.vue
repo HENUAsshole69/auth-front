@@ -13,6 +13,12 @@
                             </v-row>
                             <v-row dense no-gutters>
                                 <v-col>
+                                    <v-text-field :rules="nonEmptyRules" dense label="文本"
+                                                  v-model="inventory.text"/>
+                                </v-col>
+                            </v-row>
+                            <v-row dense no-gutters>
+                                <v-col>
                                     <v-text-field
                                             :value="inventory.requisitionTime === ''?'不存在':new Date(inventory.requisitionTime).toLocaleDateString('zh-cn')"
                                             dense label="入库时间" readonly/>
@@ -79,7 +85,7 @@
     export default class InventoryInput extends Vue {
         @Prop()
         readonly id: number | undefined
-        private inventory: InventoryDto = {requisitionStatus: "", requisitionTime: ""}
+        private inventory: InventoryDto = {requisitionStatus: "", requisitionTime: "", text: ""}
         private valid = false
         private noEntry = false
         private updateKey = 0

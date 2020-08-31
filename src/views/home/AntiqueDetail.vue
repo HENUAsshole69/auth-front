@@ -23,7 +23,7 @@
                     />
 
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="3">
                     <v-list
                             subheader
                             three-line
@@ -46,8 +46,51 @@
 
                         <v-list-item>
                             <v-list-item-content>
+                                <v-list-item-title>来源信息</v-list-item-title>
+                                <v-list-item-subtitle>{{antiqueDto.sourceInfo}}</v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item>
+                            <v-list-item-content>
                                 <v-list-item-title>描述</v-list-item-title>
                                 <v-list-item-subtitle>{{antiqueDto.desp}}</v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list>
+                </v-col>
+                <v-col cols="3">
+                    <v-list
+                            subheader
+                            three-line
+                    >
+                        <v-subheader></v-subheader>
+
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>年代</v-list-item-title>
+                                <v-list-item-subtitle>{{antiqueDto.era}}</v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>完整程度</v-list-item-title>
+                                <v-list-item-subtitle>{{antiqueDto.wholeness}}</v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>鉴定诉求</v-list-item-title>
+                                <v-list-item-subtitle>{{antiqueDto.authType}}</v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+
+                        <v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>规格</v-list-item-title>
+                                <v-list-item-subtitle>{{antiqueDto.spec}}</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list>

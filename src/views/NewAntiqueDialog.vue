@@ -27,13 +27,33 @@
                                 </v-row>
                                 <v-row>
                                     <v-col>
-                                        <v-textarea :hint="'输入文物描述'" :rules="nameRules" dense label="描述"
-                                                    v-model="antique.desp"/>
+                                        <TypeSelector @change="antique.type = $event"/>
+                                    </v-col>
+                                    <v-col>
+                                        <v-text-field :hint="'输入文物年代'" :rules="nameRules" dense label="年代"
+                                                      v-model="antique.era"/>
                                     </v-col>
                                 </v-row>
                                 <v-row>
                                     <v-col>
-                                        <TypeSelector @change="antique.type = $event"/>
+                                        <v-text-field :hint="'输入完整程度'" :rules="nameRules" dense label="完整程度"
+                                                      v-model="antique.wholeness"/>
+                                    </v-col>
+                                    <v-col>
+                                        <v-text-field :hint="'输入鉴定诉求'" :rules="nameRules" dense label="鉴定诉求"
+                                                      v-model="antique.authType"/>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col>
+                                        <v-text-field :hint="'输入来源信息'" :rules="nameRules" dense label="来源信息"
+                                                      v-model="antique.sourceInfo"/>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col>
+                                        <v-text-field :hint="'输入规格'" :rules="nameRules" dense label="规格"
+                                                      v-model="antique.spec"/>
                                     </v-col>
                                 </v-row>
                                 <v-row>
@@ -41,7 +61,12 @@
                                         <PicFileInput @change="antique.pic = $event"/>
                                     </v-col>
                                 </v-row>
-
+                                <v-row>
+                                    <v-col>
+                                        <v-textarea :hint="'输入文物描述'" :rules="nameRules" dense label="描述"
+                                                    v-model="antique.desp"/>
+                                    </v-col>
+                                </v-row>
                             </v-container>
                         </v-form>
                     </v-tab-item>

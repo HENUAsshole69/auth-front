@@ -34,7 +34,7 @@
                 <v-icon>mdi-dots-horizontal-circle-outline</v-icon>
             </v-btn>
             <v-btn @click="dialog = true" icon>
-                <v-icon>mdi-arrow-left</v-icon>
+                <v-icon>mdi-account</v-icon>
             </v-btn>
             <applier-info-edit-dialog :id="item.id" v-model="dialog"/>
         </template>

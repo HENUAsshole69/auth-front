@@ -25,17 +25,18 @@
                                 </v-row>
                                 <v-row>
                                     <v-col>
-                                        <v-textarea label="描述" :rules="nameRules" v-model="antique.desp"  :hint="'输入文物描述'"/>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col>
                                         <TypeSelector @change="antique.type = $event"/>
                                     </v-col>
                                 </v-row>
                                 <v-row>
                                     <v-col>
                                         <PicFileInput @change="antique.pic = $event"/>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col>
+                                        <v-textarea :hint="'输入文物描述'" :rules="nameRules" label="描述"
+                                                    v-model="antique.desp"/>
                                     </v-col>
                                 </v-row>
                                 <v-row>

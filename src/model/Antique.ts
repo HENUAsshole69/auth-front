@@ -3,26 +3,40 @@ import {User} from './User';
 import {ApplierInfo} from "@/model/ApplierInfo";
 
 export interface Antique {
+    authType: string;
+    cert: String | null;
+    date: String;
+    desp: string;
+    era: string;
     id: number | null;
+    invalid: boolean;
     name: string;
-    pic: string;
+    owner: ApplierInfo | null;
+    pic: String;
+    sourceInfo: string;
+    spec: string;
     type: AntiqueType;
-    user: User;
-    desp: string | null;
+    user: User | null;
     verificationProcesses: VerificationProcess[];
-    wearAndTear: WearAndTear | null
+    wearAndTear: WearAndTear | null;
+    wholeness: string;
 }
-
 export interface AntiqueDto {
-    desp: string | null;
+    authType: string;
+    desp: string;
+    era: string;
     id: number;
-    name: string;
-    type: AntiqueType;
     invalid: boolean | null;
-    userName: string;
+    name: string;
+    owner: ApplierInfo | null;
+    pic: number[] | null;
+    sourceInfo: string;
+    spec: string;
+    type: AntiqueType;
+    userName: string | null;
     verificationProcesses: number;
-    owner: ApplierInfo;
-    pic: Blob | null;
+    wearAndTear: WearAndTear | null;
+    wholeness: string;
 }
 
 export type AntiqueType = "PORCELAIN" | "JADE" | "PAINTING_CALLIGRAPHY" | "METAL" | "MISC";

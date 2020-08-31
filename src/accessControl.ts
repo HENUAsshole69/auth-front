@@ -20,5 +20,5 @@ export function ifRoleCanCred(role: UserType): boolean {
 }
 
 export function ifRoleCanInventory(role: UserType): boolean {
-    return true
+    return role === "AUTH_CENTER"
 }
