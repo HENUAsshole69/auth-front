@@ -43,8 +43,8 @@
 
 <script>
     import {AntiqueClient} from "../../client/AntiqueClient";
-    import QRDisplay from "../QRDisplay";
-    import CertDownloader from "./CertDownloader";
+    import QRDisplay from "./Antique/QRDisplay";
+    import CertDownloader from "./Antique/CertDownloader";
     import ApplierInfoEditDialog from "../ApplierInfoEditDialog";
 
     export default {

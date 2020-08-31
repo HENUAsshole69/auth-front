@@ -33,20 +33,20 @@
 <script lang="ts">
     import Vue from 'vue'
     import Component from "vue-class-component";
-    import {Antique, AntiqueDto} from "@/model/Antique";
+    import {AntiqueDto} from "@/model/Antique";
     import {Prop} from "vue-property-decorator";
     import {AntiqueClient} from "@/client/AntiqueClient";
-    import QRCode from 'qrcode'
-    import QRDisplay from "@/components/QRDisplay.vue";
+    import QRDisplay from "@/components/classic/Antique/QRDisplay.vue";
+
     @Component({
-        components:{
+        components: {
             QRDisplay
 
         }
     })
-    export default class AntiqueCard extends Vue{
+    export default class AntiqueCard extends Vue {
         @Prop() readonly antique: AntiqueDto | undefined
-        picSrc=""
+        picSrc = ""
         qrMenu=false
         async mounted(){
             this.picSrc ='data:image/jpeg;base64, '+ (await AntiqueClient.getAntiquePic(this.antique!!.id))

@@ -30,7 +30,7 @@
 <script>
     import QRCode from "qrcode";
     import QRCanvas from "@/components/QRCanvas";
-    import {AntiqueClient} from "../../client/AntiqueClient";
+    import {AntiqueClient} from "../../../client/AntiqueClient";
 
     export default {
         name: "CertDownloader",
