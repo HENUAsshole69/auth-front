@@ -3,17 +3,19 @@
             enter-active-class="animated slideInRight"
             leave-active-class="animated slideOutLeft">
     <v-card
-            style="margin:1em"
+            flat
+            style="margin:0;padding: 0"
+            tile
     >
-            <v-card-title>磨损信息</v-card-title>
+        <v-card-title>磨损信息</v-card-title>
 
 
         <v-card-text class="text--primary">
             <v-form v-model="valid" :disabled="antique.wearAndTear !== null">
-            <v-container>
-                <v-row>
-                    <v-col>
-                        <v-textarea v-model="wearAndTear.content" :rules="contentRules"></v-textarea>
+                <v-container>
+                    <v-row>
+                        <v-col>
+                            <v-textarea v-model="wearAndTear.content" :rules="contentRules"></v-textarea>
                     </v-col>
                 </v-row>
             </v-container>

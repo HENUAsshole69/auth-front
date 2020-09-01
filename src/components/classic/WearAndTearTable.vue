@@ -35,7 +35,10 @@
         </template>
 
         <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length"><wear-and-tear-detail :key="rerenderKey" :antique="item" @success="rerenderKey++" @error="rerenderKey++"/></td>
+            <td :colspan="headers.length" style="padding: 0;margin: 0">
+                <wear-and-tear-detail :antique="item" :key="rerenderKey" @error="rerenderKey++"
+                                      @success="rerenderKey++"/>
+            </td>
         </template>
     </v-data-table>
 </template>
