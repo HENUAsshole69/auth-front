@@ -35,7 +35,10 @@
         </template>
 
         <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length"><verification-stepper :key="rerenderKey" :antique="item" @success="rerenderKey++" @error="rerenderKey++"/></td>
+            <td :colspan="headers.length" style="padding: 0;margin: 0;">
+                <verification-stepper :antique="item" :key="rerenderKey" @error="rerenderKey++"
+                                      @success="rerenderKey++"/>
+            </td>
         </template>
     </v-data-table>
 </template>

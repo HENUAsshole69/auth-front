@@ -4,18 +4,19 @@
             leave-active-class="animated slideOutLeft">
 
     <v-card
-
-            style="margin:1em"
+            :elevation="0"
+            flat
+            tile
     >
         <v-card-title>鉴定证书</v-card-title>
         <v-card-text class="text--primary" v-if="loading">
-        <v-container fluid>
-            <v-row
-            >
-                <v-col cols="12">
-                    <v-row
-                            align="center"
-                            justify="center"
+            <v-container fluid>
+                <v-row
+                >
+                    <v-col cols="12">
+                        <v-row
+                                align="center"
+                                justify="center"
                     >
                     <v-progress-circular
                             indeterminate

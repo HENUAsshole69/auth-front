@@ -1,16 +1,24 @@
 <template>
-    <v-container>
-        <v-col>
+    <v-container style="padding: 0;margin: 0">
+        <v-col style="padding: 0;margin: 0">
 
-            <v-stepper v-model="stepper" vertical>
+            <v-stepper style="border-radius: 0" v-model="stepper" vertical>
                 <template v-for="num in [1,2,3]">
                     <v-stepper-step :editable="
-allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)" :complete="antique.verificationProcesses >= num" :step="num" :key="0-num" :rules="[()=>!(antique.invalid && antique.verificationProcesses === num)]">
+allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)"
+                                    :complete="antique.verificationProcesses >= num" :step="num" :key="0-num"
+                                    :rules="[()=>!(antique.invalid && antique.verificationProcesses === num)]">
                         {{StageSelectNameMap[num - 1].text}}
                         <small>{{verifications[num - 1]!==undefined?verifications[num - 1].content:''}}</small>
                     </v-stepper-step>
-                    <non-final-verification-step :editable="allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)" :step="num" v-if="num !== 3" :key="num" @success="$router.go(0)" @error="$router.go(0)" :antique="antique"/>
-                    <final-verification-step :editable="allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)" :step="num" v-else :key="num" @success="$router.go(0)" @error="$router.go(0)" :antique="antique"/>
+                    <non-final-verification-step
+                            :editable="allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)"
+                            :step="num" v-if="num !== 3" :key="num" @success="$router.go(0)" @error="$router.go(0)"
+                            :antique="antique"/>
+                    <final-verification-step
+                            :editable="allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)"
+                            :step="num" v-else :key="num" @success="$router.go(0)" @error="$router.go(0)"
+                            :antique="antique"/>
                 </template>
             </v-stepper>
         </v-col>
@@ -19,17 +27,17 @@ allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== 
 
 <script lang="ts">
     import Vue from 'vue'
-    import {StageSelectNameMap, VerificationProcessStage, strToStep} from "@/model/Verification";
+    import {StageSelectNameMap, strToStep, VerificationProcessDto} from "@/model/Verification";
     import Component from "vue-class-component";
     import {Prop} from "vue-property-decorator";
     import {AntiqueDto} from "@/model/Antique";
-    import {VerificationProcessDto} from "@/model/Verification";
     import {ifRoleCanVerify} from '@/accessControl';
     import {VerClient} from "@/client/VerClient";
     import StageSelector from "@/components/StageSelector.vue";
     import VerificationDisplay from "@/components/VerificationDisplay.vue";
     import NonFinalVerificationStep from "@/components/classic/NonFinalVerificationStep.vue";
     import FinalVerificationStep from "@/components/classic/FinalVerificationStep.vue";
+
     @Component({
         components:{
             NonFinalVerificationStep,

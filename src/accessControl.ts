@@ -20,5 +20,5 @@ export function ifRoleCanCred(role: UserType): boolean {
 }
 
 export function ifRoleCanInventory(role: UserType): boolean {
-    return role === "AUTH_CENTER"
+    return role === "AUTH_CENTER" || role === "ADMIN";
 }
