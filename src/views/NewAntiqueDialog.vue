@@ -30,8 +30,9 @@
                                         <TypeSelector @change="antique.type = $event"/>
                                     </v-col>
                                     <v-col>
-                                        <v-text-field :hint="'输入文物年代'" :rules="nameRules" dense label="年代"
-                                                      v-model="antique.era"/>
+                                        <!--<v-text-field :hint="'输入文物年代'" :rules="nameRules" dense label="年代"
+                                                      v-model="antique.era"/>-->
+                                        <era-select v-model="antique.era"/>
                                     </v-col>
                                 </v-row>
                                 <v-row>
@@ -40,8 +41,9 @@
                                                       v-model="antique.wholeness"/>
                                     </v-col>
                                     <v-col>
-                                        <v-text-field :hint="'输入鉴定诉求'" :rules="nameRules" dense label="鉴定诉求"
-                                                      v-model="antique.authType"/>
+                                        <!--<v-text-field :hint="'输入鉴定诉求'" :rules="nameRules" dense label="鉴定诉求"
+                                                      v-model="antique.authType"/>-->
+                                        <auth-type-select v-model="antique.authType"/>
                                     </v-col>
                                 </v-row>
                                 <v-row>
@@ -109,9 +111,13 @@
     import ApplierType from "../components/ApplierType";
     import IndividualApplierInfoInput from "../components/IndividualApplierInfoInput";
     import FormFileUploader from "../components/classic/Inventory/FormFileUploader";
+    import AuthTypeSelect from "../components/classic/AuthTypeSelect";
+    import EraSelect from "../components/classic/EraSelect";
 
     export default {
         components: {
+            EraSelect,
+            AuthTypeSelect,
             EnterpriseApplierInfoInput, IndividualApplierInfoInput, ApplierType, PicFileInput, TypeSelector
         },
         data: () => ({
