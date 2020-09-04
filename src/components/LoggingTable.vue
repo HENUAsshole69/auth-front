@@ -12,9 +12,14 @@
             }"
             no-data-text="无数据"
     >
-        <!--<template v-slot:item.verifiable="{ item }">
-            <user-verifiable-select :verifiable="item.verifiable" @change="replaceArr(item.verifiable,$event)"/>
-        </template>-->
+        <template v-slot:item.dateTime="{ item }">
+            {{new Date(item.dateTime).toString()}}
+        </template>
+
+        <template v-slot:item.opName="{ item }">
+            {{OperationNameMap[item.opName] !== undefined?OperationNameMap[item.opName]:item.opName}}
+        </template>
+
         <template v-slot:footer.page-text="{pageStart,
   pageStop,
   itemsLength}">
@@ -25,21 +30,22 @@
 
 <script>
     import LoggingClient from "../client/LoggingClient";
-
+    import {OperationNameMap} from "./OperationNameMap";
     export default {
         name: "LoggingTable",
         components: {},
         data:()=>({
-            headers:[{
+            headers: [{
                 text: '名称',
                 align: 'start',
                 sortable: true,
                 value: 'userName',
             },
-                { text: '操作', value: 'opName' },
-                { text: '时间', value: 'dateTime'}],
-            items:[],
-            totalLength:0
+                {text: '操作', value: 'opName'},
+                {text: '时间', value: 'dateTime'}],
+            items: [],
+            totalLength: 0,
+            OperationNameMap
         }),
         methods:{
             onUpdate:async function (val) {
