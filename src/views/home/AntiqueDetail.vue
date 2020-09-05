@@ -9,13 +9,22 @@
                 <v-icon>mdi-close</v-icon>
             </v-btn>
 
-            <v-toolbar-title><v-breadcrumbs :items="crumb"></v-breadcrumbs></v-toolbar-title>
+            <v-toolbar-title>
+                <v-breadcrumbs :items="crumb"></v-breadcrumbs>
+            </v-toolbar-title>
 
             <v-spacer></v-spacer>
 
         </v-app-bar>
         <v-divider/>
-        <v-container>
+        <v-progress-circular
+                :size="70"
+                :width="7"
+                class="center"
+                indeterminate
+                v-if="loading"
+        ></v-progress-circular>
+        <v-container v-if="!loading">
             <v-row>
                 <v-col cols="6">
                     <v-img
@@ -130,7 +139,8 @@
     export default class AntiqueDetail extends Vue{
         @Prop() readonly id: number | undefined
         private antiqueDto: AntiqueDto | undefined
-        private picSrc=""
+        private loading = true
+        private picSrc = ""
         private crumb = [
             {
                 text: '主页',
@@ -156,10 +166,11 @@
             const result = await VerClient.getVerification(this.antiqueDto?.id)
             this.verifications.push(...result)
             this.crumb[2].text = this.antiqueDto.name
+            this.loading = false
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    @import "style/layout";
 </style>

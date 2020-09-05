@@ -70,6 +70,7 @@ allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== 
                 this.stepper = this.antique.verificationProcesses + 1
                 const result = await VerClient.getVerification(this.antique?.id)
                 this.verifications.push(...result)
+
             }
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const model = this
