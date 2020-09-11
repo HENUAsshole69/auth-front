@@ -60,10 +60,10 @@
         </v-row>
         <v-row style="margin: 0;padding: 0">
             <v-col class="horizontal-no-gutter">
-                <v-text-field :disabled="disabled" :rules="nonEmptyRules" dense label="传真" v-model="info.fax"/>
+                <v-text-field :disabled="disabled" dense label="传真" v-model="info.fax"/>
             </v-col>
             <v-col class="horizontal-no-gutter">
-                <v-text-field :disabled="disabled" :rules="nonEmptyRules" dense label="邮编" v-model="info.zipCode"/>
+                <v-text-field :disabled="disabled" dense label="邮编" v-model="info.zipCode"/>
             </v-col>
         </v-row>
         <v-row style="margin: 0;padding: 0">
