@@ -1,14 +1,15 @@
 <template>
-    <v-data-table
-            @update:options="onUpdate"
-            :headers="headers"
-            :items="items"
-            :server-items-length="totalLength"
-            :footer-props="{
-                'items-per-page-text': '每页显示项数:',
-                'items-per-page-all-text': '所有项'
+    <jpa-data-table
+            :data-table-props="{
+                'footer-props':{
+                    'items-per-page-text': '每页显示项数:',
+                    'items-per-page-all-text': '所有项'
+                },
+                'no-data-text':'无数据'
             }"
-            no-data-text="无数据"
+            :repo="repo"
+            @load="$emit('load')"
+            @loaded="$emit('loaded')"
     >
         <template v-slot:item.verifiable="{ item }">
             <user-verifiable-select :verifiable="item.verifiable" @change="replaceArr(item.verifiable,$event)"/>
@@ -36,59 +37,58 @@
             </v-btn>
         </template>
 
-    </v-data-table>
+    </jpa-data-table>
 </template>
 
 <script>
     import {UserClient} from "../client/UserClient";
     import UserVerifiableSelect from "./UserVerifiableSelect";
     import RoleSelector from "./RoleSelector";
+    import JpaDataTable from "@lu1kaifeng/jpa-data-table/src/components/JpaDataTable";
+    import UserManagementRepo from "../client/UserManagementRepo";
 
     export default {
         name: "UserManagementTable",
-        components: {RoleSelector, UserVerifiableSelect},
-        props:{
-            keyWord:String
+        components: {RoleSelector, UserVerifiableSelect, JpaDataTable},
+        props: {
+            keyWord: String
         },
-        data:()=>({
-            headers:[{
+        data: () => ({
+            headers: [{
                 text: '名称',
                 align: 'start',
                 sortable: true,
                 value: 'name',
             },
-                { text: '审核权限', value: 'verifiable' },
-                { text: '用户类型', value: 'type' },
-                { text: '保存', value: 'save', sortable: false },
-                { text: '删除', value: 'del', sortable: false }],
-            items:[],
-            totalLength:0
+                {text: '审核权限', value: 'verifiable'},
+                {text: '用户类型', value: 'type'},
+                {text: '保存', value: 'save', sortable: false},
+                {text: '删除', value: 'del', sortable: false}],
+            items: [],
+            totalLength: 0,
+            repo: null
         }),
-        methods:{
-            onUpdate:async function (val) {
-                this.$emit('load')
-                if(/[^\s]+/.test(this.keyWord)) {
-                    this.items.length = 0
-                    const res =(await UserClient.searchUser(this.keyWord,val.page - 1,val.itemsPerPage))
-                    this.totalLength = res.totalElements
-                    this.items.push(...res.content)
-                }else {
-                    this.items.length = 0
-                    const res =(await UserClient.getAllUser(val.page - 1,val.itemsPerPage))
-                    this.totalLength = res.totalElements
-                    this.items.push(...res.content)
-                }
-                this.$emit('loaded')
-            },
-            replaceArr(arr,n){
-                arr.length  = 0;
+        beforeMount: async function () {
+            this.$emit('load')
+            if (/[^\s]+/.test(this.keyWord)) {
+                this.repo = {fetch: UserManagementRepo(this.keyWord)}
+            } else {
+                this.repo = {fetch: UserManagementRepo()}
+            }
+            this.$emit('loaded')
+        },
+        methods: {
+            UserManagementRepo,
+
+            replaceArr(arr, n) {
+                arr.length = 0;
                 arr.push(...n)
             },
-            upload(obj){
-                UserClient.updateVerificationAuth(obj.id,obj.verifiable)
-                UserClient.updateUserType(obj.id,obj.type)
+            upload(obj) {
+                UserClient.updateVerificationAuth(obj.id, obj.verifiable)
+                UserClient.updateUserType(obj.id, obj.type)
             },
-            async delUser(obj){
+            async delUser(obj) {
                 await UserClient.delUser(obj.id)
                 this.$router.go(0)
             }

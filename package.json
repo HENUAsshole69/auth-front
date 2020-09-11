@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@lu1kaifeng/jpa-data-table": "^0.8.0",
     "@braid/vue-formulate": "^2.4.2",
     "@types/node": "^14.0.22",
     "axios": "^0.19.2",

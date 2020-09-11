@@ -1,16 +1,17 @@
 
 
 <template>
-    <v-data-table
-            @update:options="onUpdate"
-            :headers="headers"
-            :items="items"
-            :server-items-length="totalLength"
-            :footer-props="{
-                'items-per-page-text': '每页显示项数:',
-                'items-per-page-all-text': '所有项'
+    <jpa-data-table
+            :data-table-props="{
+        'footer-props':{
+                    'items-per-page-text': '每页显示项数:',
+                    'items-per-page-all-text': '所有项'
+                },
+                'no-data-text':'无数据'
             }"
-            no-data-text="无数据"
+            :repo="repo"
+            @load="$emit('load')"
+            @loaded="$emit('loaded')"
     >
         <template v-slot:item.dateTime="{ item }">
             {{new Date(item.dateTime).toString()}}
@@ -25,16 +26,18 @@
   itemsLength}">
             {{'从第'+pageStart+'项至第'+pageStop+'项，共'+itemsLength+'项'}}
         </template>
-    </v-data-table>
+    </jpa-data-table>
 </template>
 
 <script>
-    import LoggingClient from "../client/LoggingClient";
     import {OperationNameMap} from "./OperationNameMap";
+    import JpaDataTable from "@lu1kaifeng/jpa-data-table/src/components/JpaDataTable";
+    import LoggingRepo from "../client/LoggingRepo";
+
     export default {
         name: "LoggingTable",
-        components: {},
-        data:()=>({
+        components: {JpaDataTable},
+        data: () => ({
             headers: [{
                 text: '名称',
                 align: 'start',
@@ -45,18 +48,17 @@
                 {text: '时间', value: 'dateTime'}],
             items: [],
             totalLength: 0,
-            OperationNameMap
+            OperationNameMap,
+            repo: null
         }),
-        methods:{
-            onUpdate:async function (val) {
-                this.$emit('load')
-                this.items.length = 0
-                const res =(await LoggingClient.getLogPage(val.page - 1,val.itemsPerPage))
-                this.totalLength = res.totalElements
-                this.items.push(...res.content)
-                this.$emit('loaded')
-            },
-            replaceArr(arr,n) {
+        beforeMount: async function () {
+            this.$emit('load')
+            this.repo = {fetch: LoggingRepo()}
+            this.$emit('loaded')
+        },
+        methods: {
+
+            replaceArr(arr, n) {
                 arr.length = 0;
                 arr.push(...n)
             }
