@@ -18,58 +18,7 @@
                 <v-tabs-items v-model="tab">
                     <v-tab-item>
                         <v-form v-model="valid">
-                            <v-container fluid>
-                                <v-row>
-                                    <v-col>
-                                        <v-text-field :hint="'输入文物名称'" :rules="nameRules" dense label="名称"
-                                                      v-model="antique.name"/>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col>
-                                        <TypeSelector @change="antique.type = $event"/>
-                                    </v-col>
-                                    <v-col>
-                                        <v-text-field :hint="'输入文物年代'" :rules="nameRules" dense label="年代"
-                                                      v-model="antique.era"/>
-                                        <!--<era-select v-model="antique.era"/>-->
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col>
-                                        <v-text-field :hint="'输入完整程度'" :rules="nameRules" dense label="完整程度"
-                                                      v-model="antique.wholeness"/>
-                                    </v-col>
-                                    <v-col>
-                                        <v-text-field :hint="'输入鉴定诉求'" :rules="nameRules" dense label="鉴定诉求"
-                                                      v-model="antique.authType"/>
-                                        <!--<auth-type-select v-model="antique.authType"/>-->
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col>
-                                        <v-text-field :hint="'输入来源信息'" :rules="nameRules" dense label="来源信息"
-                                                      v-model="antique.sourceInfo"/>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col>
-                                        <v-text-field :hint="'输入规格'" :rules="nameRules" dense label="规格"
-                                                      v-model="antique.spec"/>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col>
-                                        <PicFileInput @change="antique.pic = $event"/>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col>
-                                        <v-textarea :hint="'输入文物描述'" :rules="nameRules" dense label="描述"
-                                                    v-model="antique.desp"/>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
+                            <new-antique-info-input v-model="antique"/>
                         </v-form>
                     </v-tab-item>
                     <v-tab-item>
@@ -113,17 +62,15 @@
     import FormFileUploader from "../components/classic/Inventory/FormFileUploader";
     import AuthTypeSelect from "../components/classic/AuthTypeSelect";
     import EraSelect from "../components/classic/EraSelect";
+    import NewAntiqueInfoInput from "../components/classic/NewAntiqueInfoInput";
 
     export default {
         components: {
-            EnterpriseApplierInfoInput, IndividualApplierInfoInput, ApplierType, PicFileInput, TypeSelector
+            NewAntiqueInfoInput,
+            EnterpriseApplierInfoInput, IndividualApplierInfoInput, ApplierType
         },
         data: () => ({
             antique: {
-                name: '',
-                type: null,
-                desp: '',
-                pic: ''
             },
             valid: false,
             nameRules: [v => v.length !== 0 || '名称不能为空'],

@@ -28,7 +28,7 @@
             <v-row>
                 <v-col cols="6">
                     <v-img
-                            :src="picSrc" aspect-ratio="1.7778"
+                            :src="picSrc" aspect-ratio="1.7778" contain
                     />
 
                 </v-col>

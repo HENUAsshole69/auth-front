@@ -31,7 +31,7 @@
         </v-row>
         <v-row style="margin: 0;padding: 0">
             <v-col class="horizontal-no-gutter">
-                <v-text-field :disabled="disabled" :rules="nonEmptyRules" dense label="注册资本"
+                <v-text-field :disabled="disabled" :rules="nonEmptyRules" dense label="注册资本" type="number"
                               v-model="info.registrationCapital"/>
             </v-col>
             <v-col class="horizontal-no-gutter">

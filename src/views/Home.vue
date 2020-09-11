@@ -25,7 +25,7 @@
                     </v-col>
                 </v-row>
                 <v-row class="flex-nowrap" no-gutters style="height: 100%">
-                    <v-col cols="auto" style="height: 100%">
+                    <v-col class="flex-grow-0" style="height: 100%">
                         <div style="width: 256px;height: 100%;">
                             <v-navigation-drawer left
                                                  permanent>
@@ -85,7 +85,7 @@
                             </v-navigation-drawer>
                         </div>
                     </v-col>
-                    <v-col class="flex-grow-1" cols="auto">
+                    <v-col class="flex-grow-1">
                         <router-view></router-view>
                     </v-col>
                 </v-row>
