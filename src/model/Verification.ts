@@ -10,9 +10,10 @@ export interface VerificationProcess {
 }
 
 export interface VerificationProcessDto {
-    content: string|undefined;
-    id: number|undefined;
-    stage: VerificationProcessStage|undefined;
+    content?: string;
+    id?: number;
+    stage?: VerificationProcessStage;
+    userName?: string;
 }
 
 export const StageSelectNameMap  = [

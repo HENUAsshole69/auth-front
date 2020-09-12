@@ -10,6 +10,8 @@ allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== 
                                     :rules="[()=>!(antique.invalid && antique.verificationProcesses === num)]">
                         {{StageSelectNameMap[num - 1].text}}
                         <small>{{verifications[num - 1]!==undefined?verifications[num - 1].content:''}}</small>
+                        <small v-if="verifications[num - 1]!==undefined">{{'批准人：' + verifications[num -
+                            1].userName}}</small>
                     </v-stepper-step>
                     <non-final-verification-step
                             :editable="allowedStep.includes(StageSelectNameMap[num - 1].value) &&( antique.invalid !== true) && ifRoleCanVerify($store.state.userObj.type)"
