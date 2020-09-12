@@ -44,4 +44,5 @@ export type AntiqueType = "PORCELAIN" | "JADE" | "PAINTING_CALLIGRAPHY" | "METAL
 export interface WearAndTear {
     content: string;
     id: number;
+    user?: User
 }

@@ -2,7 +2,8 @@
     <v-data-table
             :footer-props="{
                 'items-per-page-text': '每页显示项数:',
-                'items-per-page-all-text': '所有项'
+                'items-per-page-all-text': '所有项',
+                'items-per-page-options':[5,10,15]
             }"
             :headers="headers"
             :items="items"
@@ -56,17 +57,19 @@
             date: Array
         },
         data: () => ({
-            headers: [{
-                text: '名称',
-                align: 'start',
-                sortable: true,
-                value: 'name',
-            },
+            headers: [
+                {text: '库存信息', align: 'start', value: 'data-table-expand'},
+                {
+                    text: '名称',
+
+                    sortable: true,
+                    value: 'name',
+                },
                 {text: '序号', value: 'id'},
                 {text: '用户', value: 'userName'},
                 {text: '描述', value: 'desp'},
                 {text: '详情', value: 'details', sortable: false},
-                {text: '库存信息', value: 'data-table-expand'}],
+            ],
             items: [],
             rerenderKey: 0,
             totalLength: 0

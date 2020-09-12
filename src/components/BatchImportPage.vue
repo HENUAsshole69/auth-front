@@ -91,17 +91,17 @@
         components: {ApplierInfoImportDialog, NewAntiqueInfoInput},
         data: () => ({
             headers: [
+                {text: '申请人信息', align: 'start', value: 'data-table-expand'},
                 {
                     text: '名称',
-                    align: 'start',
+
                     sortable: false,
                     value: 'name',
                 },
                 {text: '描述', value: 'desp'},
                 {text: '类别', value: 'type'},
                 {text: '图片', value: 'pic'},
-                {text: '删除', value: 'actions', sortable: false},
-                {text: '申请人信息', value: 'data-table-expand'}
+                {text: '删除', value: 'actions', sortable: false}
             ],
             antiques: [{key: 0}],
             nameRules: [v => v.length !== 0 || '名称不能为空'],

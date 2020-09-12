@@ -8,7 +8,8 @@
             :server-items-length="totalLength"
             :footer-props="{
                 'items-per-page-text': '每页显示项数:',
-                'items-per-page-all-text': '所有项'
+                'items-per-page-all-text': '所有项',
+                'items-per-page-options':[5,10,15]
             }"
             no-data-text="无数据"
             dense
@@ -57,20 +58,20 @@
             date: Array
         },
         data:()=>({
-            headers:[{
-                text: '名称',
-                align: 'start',
-                sortable: true,
-                value: 'name',
-            },
-                { text: '序号', value: 'id' },
-                { text: '用户', value: 'userName' },
-                { text: '描述', value: 'desp' },
-                { text: '详情', value: 'details',sortable: false },
-                { text: '录入', value: 'data-table-expand' }],
-            items:[],
-            rerenderKey:0,
-            totalLength:0
+            headers: [
+                {text: '录入', align: 'start', value: 'data-table-expand'},
+                {
+                    text: '名称',
+                    sortable: true,
+                    value: 'name',
+                },
+                {text: '序号', value: 'id'},
+                {text: '用户', value: 'userName'},
+                {text: '描述', value: 'desp'},
+                {text: '详情', value: 'details', sortable: false}],
+            items: [],
+            rerenderKey: 0,
+            totalLength: 0
         }),
         watch:{
         },
